@@ -20,9 +20,21 @@
     <div class="container fade-in">
       <h2>About Me</h2>
       <p>
-        I’m Nicholas Bell, a Mechatronic Engineer passionate about robotics, AI, and embedded systems.
-        I enjoy working on projects that merge mechanics, electronics, and programming to create solutions that improve efficiency and innovation.
+        I’m Nicholas Bell, a final-year Mechatronic Engineering student with a strong interest in autonomous robotics, AI, and how these systems interact with humans. I’m particularly passionate about exploring environments beyond human reach and leveraging technology to solve real-world challenges.
       </p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="container fade-in">
+      <h2>Skills</h2>
+      <ul>
+        <li>Proficient in C++, Python, and MATLAB</li>
+        <li>Collaborative problem solving</li>
+        <li>Effective team management and leadership</li>
+        <li>Dynamic communication skills</li>
+        <li>Creative and efficient conflict resolution</li>
+      </ul>
     </div>
   </section>
 
@@ -43,12 +55,35 @@
     </div>
   </section>
 
+  <section id="experience">
+    <div class="container fade-in">
+      <h2>Experience</h2>
+      <div class="experience-item">
+        <h3>UNSW Course Demonstrator</h3>
+        <p>Feb 2023 - Apr 2024</p>
+        <p>Mentored and demonstrated engineering projects to a class of 25 students, supervised under Dr. Binghao Li.</p>
+      </div>
+      <div class="experience-item">
+        <h3>Sailing Director - UNSW Windsurfing, Surfing & Sailing Club</h3>
+        <p>Nov 2022 - Present</p>
+        <p>Head of organizing sailing events and equipment for the UNSW sailing club.</p>
+      </div>
+      <div class="experience-item">
+        <h3>rUNSWift Team Member - Humanoid Robotic Soccer Team</h3>
+        <p>Apr 2023 - Dec 2023</p>
+        <p>Contributed to the team that achieved 3rd place in RoboCup 2023 competition.</p>
+      </div>
+      <!-- Add more experience items as needed -->
+    </div>
+  </section>
+
   <section id="contact">
     <div class="container fade-in">
       <h2>Contact</h2>
-      <p>Let's work together! Reach out to me via email or find me on LinkedIn.</p>
-      <p><a href="mailto:your-custom-email@example.com">your-custom-email@example.com</a></p>
-      <p><a href="https://linkedin.com/in/your-linkedin" target="_blank">LinkedIn Profile</a></p>
+      <p>If you'd like to work with me or discuss a project, feel free to reach out!</p>
+      <p>Email: <a href="mailto:nickojbell@gmail.com">nickojbell@gmail.com</a></p>
+      <p>Phone: (+61) 435 993 853</p>
+      <p>LinkedIn: <a href="https://www.linkedin.com/in/nickojbell" target="_blank">LinkedIn Profile</a></p>
     </div>
   </section>
 
@@ -89,6 +124,17 @@
 
     faders.forEach(fader => {
       appearOnScroll.observe(fader);
+    });
+
+    // Additional animation for project hover effects
+    document.querySelectorAll('.project-item').forEach(item => {
+      item.addEventListener('mouseover', function () {
+        item.style.transform = 'scale(1.05)';
+        item.style.transition = 'transform 0.3s ease';
+      });
+      item.addEventListener('mouseleave', function () {
+        item.style.transform = 'scale(1)';
+      });
     });
   </script>
 </body>
