@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio of Nicholas Bell, Mechatronic Engineer and Robotics Enthusiast">
+  <title>Nicholas Bell | Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container fade-in">
+      <h1>Nicholas Bell</h1>
+      <p>Mechatronic Engineer | Robotics Enthusiast | Python & MATLAB Developer</p>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="container fade-in">
+      <h2>About Me</h2>
+      <p>
+        I’m Nicholas Bell, a Mechatronic Engineer passionate about robotics, AI, and embedded systems.
+        I enjoy working on projects that merge mechanics, electronics, and programming to create solutions that improve efficiency and innovation.
+      </p>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container fade-in">
+      <h2>Projects</h2>
+      <div class="project-item">
+        <h3>Robotics Vision System</h3>
+        <p>Developed a robot vision system in MATLAB for obstacle avoidance and collision detection using URSim.</p>
+        <a href="https://github.com/your-repo-link" target="_blank">View Project</a>
+      </div>
+      <div class="project-item">
+        <h3>AI Drone Object Detection</h3>
+        <p>Trained a YOLOv5-based AI system to detect objects using the VisDrone dataset for autonomous drones.</p>
+        <a href="https://github.com/your-repo-link" target="_blank">View Project</a>
+      </div>
+      <!-- Add more projects here -->
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container fade-in">
+      <h2>Contact</h2>
+      <p>Let's work together! Reach out to me via email or find me on LinkedIn.</p>
+      <p><a href="mailto:your-custom-email@example.com">your-custom-email@example.com</a></p>
+      <p><a href="https://linkedin.com/in/your-linkedin" target="_blank">LinkedIn Profile</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Nicholas Bell. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Fade-in animation as you scroll down
+    const faders = document.querySelectorAll('.fade-in');
+    const appearOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const appearOnScroll = new IntersectionObserver(function (entries, appearOnScroll) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) {
+          return;
+        } else {
+          entry.target.classList.add('appear');
+          appearOnScroll.unobserve(entry.target);
+        }
+      });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+  </script>
+</body>
+</html>
