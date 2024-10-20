@@ -481,7 +481,7 @@ a:hover, a:active, a:focus {
 
 #projects .projects-thumb a {
   display: inline-block;
-  color: #E9724C;
+  color: #fff;
   text-transform: uppercase;
   font-weight: bold;
   margin-top: 10px;
@@ -490,7 +490,7 @@ a:hover, a:active, a:focus {
 }
 
 #projects .projects-thumb a:hover {
-  color: #333;
+  color: rgb(231, 134, 85);
 }
 
 
