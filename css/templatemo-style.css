@@ -475,7 +475,6 @@ a:hover, a:active, a:focus {
 
 #projects .projects-thumb a {
   display: inline-block;
-  color: #fff;
   text-transform: uppercase;
   font-weight: bold;
   text-decoration: none;
@@ -483,7 +482,7 @@ a:hover, a:active, a:focus {
 }
 
 #projects .projects-thumb a:hover {
-  color: rgb(231, 134, 85);
+  color: rgb(136, 45, 45);
 }
 
 
