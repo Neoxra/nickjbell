@@ -452,17 +452,6 @@ a:hover, a:active, a:focus {
   background: #E9724C;
 }
 
-#projects h3 {
-  font-size: 24px;
-  text-align: center;
-}
-
-#projects p {
-  font-size: 18px;
-  line-height: 30px;
-  text-align: center;
-}
-
 #projects .projects-thumb {
   padding: 52px 22px;
 }
@@ -473,6 +462,16 @@ a:hover, a:active, a:focus {
   color: #fff;
 }
 
+#projects h3 {
+  font-size: 24px;
+  text-align: center;
+}
+
+#projects p {
+  font-size: 18px;
+  line-height: 30px;
+  text-align: center;
+}
 #projects .projects-thumb a {
   display: inline-block;
   text-transform: uppercase;
