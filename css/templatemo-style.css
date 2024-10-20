@@ -442,7 +442,6 @@ a:hover, a:active, a:focus {
 
 #projects {
   background: #E9724C;
-  /* padding: 20px 0; */
 }
 
 #projects h3 {
@@ -460,13 +459,13 @@ a:hover, a:active, a:focus {
 }
 
 #projects .projects-thumb {
-  padding: 52px 22px;
-  margin-bottom: 30px;
-  border-radius: 10px;
+  padding: 52px 22px 52px 22px;
+  /* margin-bottom: 30px;
+  border-radius: 10px; */
   transition: all 0.3s ease;
   text-align: center;
   color: #333;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   background-color: #fff;
 }
 
