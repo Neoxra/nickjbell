@@ -441,22 +441,58 @@ a:hover, a:active, a:focus {
 -----------------------------------------*/
 
 #projects {
-  background: #E9724C;
+  background: #E9724C;  
+}
+
+#projects h3 {
+  font-size: 24px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 #projects p {
   font-size: 18px;
   line-height: 30px;
+  color: #fff;
+  text-align: center;
 }
 
 #projects .projects-thumb {
   padding: 52px 22px 52px 22px;
+  margin-bottom: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  text-align: center;
+  color: #333;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#projects .projects-thumb:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 #projects .projects-thumb .fa {
   font-size: 42px;
   padding-bottom: 22px;
+  color: #E9724C;
 }
+
+#projects .projects-thumb a {
+  display: inline-block;
+  color: #E9724C;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-top: 10px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+#projects .projects-thumb a:hover {
+  color: #333;
+}
+
 
 /*---------------------------------------
     Experience section              
