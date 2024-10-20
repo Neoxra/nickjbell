@@ -437,20 +437,20 @@ a:hover, a:active, a:focus {
     Projects section              
 -----------------------------------------*/
 
-#service {
+#projects {
   background: #E9724C;
 }
 
-#service p {
+#projects p {
   font-size: 18px;
   line-height: 30px;
 }
 
-#service .service-thumb {
+#projects .projects-thumb {
   padding: 52px 22px 52px 22px;
 }
 
-#service .service-thumb .fa {
+#projects .projects-thumb .fa {
   font-size: 42px;
   padding-bottom: 22px;
 }
