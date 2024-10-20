@@ -462,11 +462,11 @@ a:hover, a:active, a:focus {
   padding: 52px 22px 52px 22px;
   /* margin-bottom: 30px;
   border-radius: 10px; */
-  transition: all 0.3s ease;
+  /* transition: all 0.3s ease;
   text-align: center;
   color: #333;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  background-color: #fff;
+  background-color: #fff; */
 }
 
 #projects .projects-thumb.bg-yellow {
