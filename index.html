@@ -1,141 +1,298 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portfolio of Nicholas Bell, Mechatronic Engineer and Robotics Enthusiast">
-  <title>Nicholas Bell | Portfolio</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="description" content="Nicholas Bell - Mechatronic Engineer Portfolio">
+<meta name="keywords" content="Mechatronic Engineer, Robotics, AI, Automation">
+<meta name="author" content="Nicholas Bell">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>Nicholas Bell | Portfolio</title>
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/animate.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/templatemo-style.css">
+
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" rel="stylesheet">
+
 </head>
-<body>
-  <header>
-    <div class="container fade-in">
-      <h1>Nicholas Bell</h1>
-      <p>Mechatronic Engineer | Robotics Enthusiast | Python & MATLAB Developer</p>
-    </div>
-  </header>
+<body data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
 
-  <section id="about">
-    <div class="container fade-in">
-      <h2>About Me</h2>
-      <p>
-        I’m Nicholas Bell, a final-year Mechatronic Engineering student with a strong interest in autonomous robotics, AI, and how these systems interact with humans. I’m particularly passionate about exploring environments beyond human reach and leveraging technology to solve real-world challenges.
-      </p>
-    </div>
-  </section>
 
-  <section id="skills">
-    <div class="container fade-in">
-      <h2>Skills</h2>
-      <ul>
-        <li>Proficient in C++, Python, and MATLAB</li>
-        <li>Collaborative problem solving</li>
-        <li>Effective team management and leadership</li>
-        <li>Dynamic communication skills</li>
-        <li>Creative and efficient conflict resolution</li>
-      </ul>
-    </div>
-  </section>
+<!-- PRE LOADER -->
+<div class="preloader">
+     <div class="spinner">
+          <span class="spinner-rotate"></span>
+     </div>
+</div>
 
-  <section id="projects">
-    <div class="container fade-in">
-      <h2>Projects</h2>
-      <div class="project-item">
-        <h3>Robotics Vision System</h3>
-        <p>Developed a robot vision system in MATLAB for obstacle avoidance and collision detection using URSim.</p>
-        <a href="https://github.com/your-repo-link" target="_blank">View Project</a>
-      </div>
-      <div class="project-item">
-        <h3>AI Drone Object Detection</h3>
-        <p>Trained a YOLOv5-based AI system to detect objects using the VisDrone dataset for autonomous drones.</p>
-        <a href="https://github.com/your-repo-link" target="_blank">View Project</a>
-      </div>
-      <!-- Add more projects here -->
-    </div>
-  </section>
 
-  <section id="experience">
-    <div class="container fade-in">
-      <h2>Experience</h2>
-      <div class="experience-item">
-        <h3>UNSW Course Demonstrator</h3>
-        <p>Feb 2023 - Apr 2024</p>
-        <p>Mentored and demonstrated engineering projects to a class of 25 students, supervised under Dr. Binghao Li.</p>
-      </div>
-      <div class="experience-item">
-        <h3>Sailing Director - UNSW Windsurfing, Surfing & Sailing Club</h3>
-        <p>Nov 2022 - Present</p>
-        <p>Head of organizing sailing events and equipment for the UNSW sailing club.</p>
-      </div>
-      <div class="experience-item">
-        <h3>rUNSWift Team Member - Humanoid Robotic Soccer Team</h3>
-        <p>Apr 2023 - Dec 2023</p>
-        <p>Contributed to the team that achieved 3rd place in RoboCup 2023 competition.</p>
-      </div>
-      <!-- Add more experience items as needed -->
-    </div>
-  </section>
+<!-- Navigation Section -->
+<div class="navbar navbar-fixed-top custom-navbar" role="navigation">
+     <div class="container">
 
-  <section id="contact">
-    <div class="container fade-in">
-      <h2>Contact</h2>
-      <p>If you'd like to work with me or discuss a project, feel free to reach out!</p>
-      <p>Email: <a href="mailto:nickojbell@gmail.com">nickojbell@gmail.com</a></p>
-      <p>Phone: (+61) 435 993 853</p>
-      <p>LinkedIn: <a href="https://www.linkedin.com/in/nickojbell" target="_blank">LinkedIn Profile</a></p>
-    </div>
-  </section>
+          <!-- navbar header -->
+          <div class="navbar-header">
+               <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+               </button>
+               <a href="#" class="navbar-brand">Nicholas Bell</a>
+          </div>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2024 Nicholas Bell. All rights reserved.</p>
-    </div>
-  </footer>
+          <div class="collapse navbar-collapse">
+               <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#home" class="smoothScroll">Home</a></li>
+                    <li><a href="#about" class="smoothScroll">About Me</a></li>
+                    <li><a href="#experience" class="smoothScroll">Experiences</a></li>
+                    <li><a href="#projects" class="smoothScroll">Projects</a></li>
+                    <li><a href="#contact" class="smoothScroll">Contact</a></li>
+               </ul>
+          </div>
 
-  <script>
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
-      });
-    });
+     </div>
+</div>
 
-    // Fade-in animation as you scroll down
-    const faders = document.querySelectorAll('.fade-in');
-    const appearOptions = {
-      threshold: 0.2,
-      rootMargin: '0px 0px -50px 0px'
-    };
 
-    const appearOnScroll = new IntersectionObserver(function (entries, appearOnScroll) {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) {
-          return;
-        } else {
-          entry.target.classList.add('appear');
-          appearOnScroll.unobserve(entry.target);
-        }
-      });
-    }, appearOptions);
+<!-- Home Section -->
+<section id="home" class="parallax-section">
+     <div class="container">
+          <div class="row">
 
-    faders.forEach(fader => {
-      appearOnScroll.observe(fader);
-    });
+               <div class="col-md-6 col-sm-6">
+                    <div class="home-img"></div>
+               </div>
 
-    // Additional animation for project hover effects
-    document.querySelectorAll('.project-item').forEach(item => {
-      item.addEventListener('mouseover', function () {
-        item.style.transform = 'scale(1.05)';
-        item.style.transition = 'transform 0.3s ease';
-      });
-      item.addEventListener('mouseleave', function () {
-        item.style.transform = 'scale(1)';
-      });
-    });
-  </script>
+               <div class="col-md-6 col-sm-6">
+                    <div class="home-thumb">
+                         <div class="section-title">
+                              <h4 class="wow fadeInUp" data-wow-delay="0.3s">Welcome to my portfolio</h4>
+                              <h1 class="wow fadeInUp" data-wow-delay="0.6s">Hello, I am <strong>Nicholas Bell</strong>, a Mechatronic Engineer based in Sydney.</h1>
+                              <p class="wow fadeInUp" data-wow-delay="0.9s">I specialize in robotics, AI, and autonomous systems. I’m passionate about integrating mechanics, electronics, and programming to create innovative solutions for real-world challenges.</p>
+                              <a href="#about" class="wow fadeInUp smoothScroll section-btn btn btn-success" data-wow-delay="1.4s">Learn More</a>
+                         </div>
+                    </div>
+               </div>
+
+          </div>
+     </div>
+</section>
+
+
+<!-- About Section -->
+<section id="about" class="parallax-section">
+     <div class="container">
+          <div class="row">
+
+               <div class="col-md-6 col-sm-12">
+                    <div class="about-thumb">
+                         <div class="wow fadeInUp section-title" data-wow-delay="0.4s">
+                              <h1>About Me</h1>
+                              <p class="color-yellow">Mechatronic Engineer with a focus on Robotics & AI</p>
+                         </div>
+                         <div class="wow fadeInUp" data-wow-delay="0.8s">
+                              <p>I’m currently in my final year at UNSW, studying Mechatronic Engineering. My work focuses on autonomous robotics, AI, and vision systems. I have developed multiple projects involving MATLAB, Python, and C++, and I enjoy solving complex engineering challenges.</p>
+                         </div>
+                    </div>
+               </div>
+
+               <div class="col-md-3 col-sm-6">
+                    <div class="background-image about-img"></div>
+               </div>
+
+               <div class="bg-yellow col-md-3 col-sm-6">
+                    <div class="skill-thumb">
+                         <div class="wow fadeInUp section-title color-white" data-wow-delay="1.2s">
+                              <h1>Skills</h1>
+                              <p class="color-white">Python, MATLAB, C++ . Robotics . AI</p>
+                         </div>
+
+                         <div class="wow fadeInUp skills-thumb" data-wow-delay="1.6s">
+                              <strong>Robotics & Automation</strong>
+                              <span class="color-white pull-right">90%</span>
+                                   <div class="progress">
+                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;"></div>
+                                   </div>
+
+                              <strong>Programming (Python, MATLAB, C++)</strong>
+                              <span class="color-white pull-right">85%</span>
+                                   <div class="progress">
+                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%;"></div>
+                                   </div>
+
+                              <strong>AI & Vision Systems</strong>
+                              <span class="color-white pull-right">80%</span>
+                                   <div class="progress">
+                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>
+                                   </div>
+                         </div>
+
+                    </div>
+               </div>
+
+          </div>
+     </div>
+</section>
+
+
+<!-- Projects Section -->
+<section id="projects" class="parallax-section">
+     <div class="container">
+          <div class="row">
+
+               <div class="bg-yellow col-md-3 col-sm-6">
+                    <div class="wow fadeInUp color-white project-thumb" data-wow-delay="0.8s">
+                         <i class="fa fa-desktop"></i>
+                              <h3>AI Drone Object Detection</h3>
+                              <p class="color-white">Developed an AI system using YOLOv5 for object detection on drones, utilizing the VisDrone dataset.</p>
+                              <a href="https://github.com/your-github-link" class="color-white">View Project</a>
+                    </div>
+               </div>
+
+               <div class="col-md-3 col-sm-6">
+                    <div class="wow fadeInUp color-white project-thumb" data-wow-delay="1.2s">
+                         <i class="fa fa-paper-plane"></i>
+                              <h3>Robot Vision System</h3>
+                              <p class="color-white">Designed a vision system in MATLAB for obstacle avoidance and path planning, implemented on a URSim robot.</p>
+                              <a href="https://github.com/your-github-link" class="color-white">View Project</a>
+                    </div>
+               </div>
+
+               <!-- Add more projects as needed -->
+
+          </div>
+     </div>
+</section>
+
+
+<!-- Experience Section -->
+<section id="experience" class="parallax-section">
+     <div class="container">
+          <div class="row">
+
+               <div class="col-md-6 col-sm-6">
+                    <div class="background-image experience-img"></div>
+               </div>
+
+               <div class="col-md-6 col-sm-6">
+                    <div class="color-white experience-thumb">
+                         <div class="wow fadeInUp section-title" data-wow-delay="0.8s">
+                              <h1>Experience</h1>
+                              <p class="color-white">Professional Experience</p>
+                         </div>
+
+                         <div class="wow fadeInUp color-white media" data-wow-delay="1.2s">
+                              <div class="media-object media-left">
+                                   <i class="fa fa-laptop"></i>
+                              </div>
+                              <div class="media-body">
+                                   <h3 class="media-heading">UNSW Course Demonstrator <small>Feb 2023 - Apr 2024</small></h3>
+                                   <p class="color-white">Mentored and guided students through various engineering projects, specializing in robotics and automation systems.</p>
+                              </div>
+                         </div>
+
+                         <div class="wow fadeInUp color-white media" data-wow-delay="1.6s">
+                              <div class="media-object media-left">
+                                   <i class="fa fa-laptop"></i>
+                              </div>
+                              <div class="media-body">
+                                   <h3 class="media-heading">Sailing Director, UNSW Sailing Club <small>Nov 2022 - Present</small></h3>
+                                   <p class="color-white">Managed and organized events and equipment for the sailing club, overseeing logistics and training.</p>
+                              </div>
+                         </div>
+
+                    </div>
+               </div>
+
+          </div>
+     </div>
+</section>
+
+
+<!-- Contact Section -->
+<section id="contact" class="parallax-section">
+     <div class="container">
+          <div class="row">
+
+               <div class="col-md-6 col-sm-12">
+                    <div class="contact-form">
+                         <div class="wow fadeInUp section-title" data-wow-delay="0.2s">
+                              <h1 class="color-white">Get in touch</h1>
+                              <p class="color-white">Feel free to reach out to me for projects or collaborations.</p>
+                         </div>
+
+                         <div id="contact-form">
+                              <form action="#template-mo" method="post">
+                                   <div class="wow fadeInUp" data-wow-delay="1s">
+                                        <input name="fullname" type="text" class="form-control" id="fullname" placeholder="Your Name">
+                                   </div>
+                                   <div class="wow fadeInUp" data-wow-delay="1.2s">
+                                        <input name="email" type="email" class="form-control" id="email" placeholder="Your Email">
+                                   </div>
+                                   <div class="wow fadeInUp" data-wow-delay="1.4s">
+                                        <textarea name="message" rows="5" class="form-control" id="message" placeholder="Your Message"></textarea>
+                                   </div>
+                                   <div class="wow fadeInUp col-md-6 col-sm-8" data-wow-delay="1.6s">
+                                        <input name="submit" type="submit" class="form-control" id="submit" value="Send">
+                                   </div>
+                              </form>
+                         </div>
+
+                    </div>
+               </div>
+
+               <div class="col-md-3 col-sm-6">
+                    <div class="background-image contact-img"></div>
+               </div>
+
+               <div class="bg-dark col-md-3 col-sm-6">
+                    <div class="contact-thumb">
+                         <div class="wow fadeInUp contact-info" data-wow-delay="0.6s">
+                              <h3 class="color-white">Contact Info</h3>
+                              <p><i class="fa fa-phone"></i> (+61) 435 993 853</p>
+                              <p><i class="fa fa-envelope-o"></i> <a href="mailto:nickojbell@gmail.com">nickojbell@gmail.com</a></p>
+                              <p><i class="fa fa-linkedin"></i> <a href="https://www.linkedin.com/in/nickojbell" target="_blank">LinkedIn Profile</a></p>
+                         </div>
+
+                    </div>
+               </div>
+
+          </div>
+     </div>
+</section>
+
+
+<!-- Footer Section -->
+<footer>
+	<div class="container">
+		<div class="row">
+
+               <div class="col-md-12 col-sm-12">
+                    <div class="wow fadeInUp footer-copyright" data-wow-delay="1.8s">
+                         <p>&copy; 2024 Nicholas Bell. All rights reserved</p>
+                    </div>
+				<ul class="wow fadeInUp social-icon" data-wow-delay="2s">
+                         <li><a href="#" class="fa fa-facebook"></a></li>
+                         <li><a href="#" class="fa fa-twitter"></a></li>
+                         <li><a href="#" class="fa fa-linkedin"></a></li>
+                    </ul>
+               </div>
+			
+		</div>
+	</div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.parallax.js"></script>
+<script src="js/smoothscroll.js"></script>
+<script src="js/wow.min.js"></script>
+<script src="js/custom.js"></script>
+
 </body>
 </html>
