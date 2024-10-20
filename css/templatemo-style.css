@@ -589,6 +589,10 @@ a:hover, a:active, a:focus {
 #contact .contact-img {
   background: url('../images/contact-img.jpg') no-repeat;
   min-height: 75vh;
+  background-size: contain;
+  background-position: center;
+  width: 100%;
+  height: 100vh;
 }
 
 #contact .contact-info {
