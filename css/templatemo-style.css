@@ -437,46 +437,22 @@ a:hover, a:active, a:focus {
     Projects section              
 -----------------------------------------*/
 
-#projects {
-  background: #f8f8f8;
-  padding: 100px 0;
+#service {
+  background: #E9724C;
 }
 
-.project-thumb {
-  padding: 40px;
-  margin-bottom: 30px;
-  color: #333;
-  text-align: center;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+#service p {
+  font-size: 18px;
+  line-height: 30px;
 }
 
-.project-thumb:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+#service .service-thumb {
+  padding: 52px 22px 52px 22px;
 }
 
-.project-thumb h3 {
-  font-size: 24px;
-  color: inherit;
-  margin-bottom: 15px;
-}
-
-.project-thumb p {
-  font-size: 16px;
-  margin-bottom: 20px;
-}
-
-.project-thumb a {
-  color: inherit;
-  text-transform: uppercase;
-  font-weight: bold;
-  letter-spacing: 1px;
-  transition: color 0.3s ease;
-}
-
-.project-thumb a:hover {
-  color: #333;
+#service .service-thumb .fa {
+  font-size: 42px;
+  padding-bottom: 22px;
 }
 
 /*---------------------------------------
