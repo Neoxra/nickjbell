@@ -470,22 +470,6 @@ a:hover, a:active, a:focus {
   padding: 52px 22px 52px 22px;
 }
 
-#projects .projects-thumb.bg-yellow {
-  background-color: #FFD700;
-}
-
-#projects .projects-thumb.bg-orange {
-  background-color: #FF6347;
-}
-
-#projects .projects-thumb.bg-dark {
-  background-color: #333;
-}
-
-#projects .projects-thumb.bg-light {
-  background-color: #ffffff;
-}
-
 #projects .projects-thumb:hover {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
