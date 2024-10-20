@@ -372,7 +372,6 @@ a:hover, a:active, a:focus {
   background-position: 70% 50%;
   width: 100%;
   height: 100vh;
-  object-fit: cover;
 }
 
 #home .home-thumb {
@@ -396,6 +395,10 @@ a:hover, a:active, a:focus {
 
 #about .about-img {
     background: url('../images/about-img.jpg') no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 100%;
+    height: 100vh;
 }
 
 #about .about-thumb,
