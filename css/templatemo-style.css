@@ -442,7 +442,7 @@ a:hover, a:active, a:focus {
 
 #projects {
   background: #E9724C;
-  padding: 100px 0;
+  /* padding: 20px 0; */
 }
 
 #projects h3 {
@@ -484,7 +484,7 @@ a:hover, a:active, a:focus {
 }
 
 #projects .projects-thumb.bg-light {
-  background-color: #F0E68C;
+  background-color: #ffffff;
   color: #333;
 }
 
