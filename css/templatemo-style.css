@@ -470,9 +470,6 @@ a:hover, a:active, a:focus {
   padding: 52px 22px 52px 22px;
 }
 
-#projects .projects-thumb:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
 
 #projects .projects-thumb .fa {
   font-size: 42px;
