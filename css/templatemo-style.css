@@ -402,7 +402,7 @@ a:hover, a:active, a:focus {
     background-position: 100% 100%;
     max-width: 100%;
     height: auto;
-    min-height: 50vh;
+    min-height: 40vh;
 }
 
 #about .about-thumb,
@@ -595,7 +595,7 @@ a:hover, a:active, a:focus {
 
 #contact .contact-img {
   background: url('../images/contact-img.jpg') no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-position: bottom center;
   width: 100%;
   min-height: 75vh;
