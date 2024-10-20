@@ -175,6 +175,10 @@ footer {
   color: #000000;
 }
 
+.bg-turquoise {
+  background: #50866f;
+}
+
 .bg-yellow {
   background: #E3AE57;
 }
@@ -402,7 +406,7 @@ a:hover, a:active, a:focus {
     background-position: 100% 100%;
     max-width: 100%;
     height: auto;
-    min-height: 40vh;
+    min-height: 45vh;
 }
 
 #about .about-thumb,
@@ -480,8 +484,17 @@ a:hover, a:active, a:focus {
   text-align: center;
 }
 
+#projects .row {
+  display: flex;
+  flex-wrap: wrap; /* ensures wrapping on smaller screens */
+  align-items: stretch; /* ensures all items are of equal height */
+}
+
 #projects .projects-thumb a {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* aligns the content within the column */
+  flex: 1; /* makes sure each project takes up the same amount of space */
   text-transform: uppercase;
   font-weight: bold;
   text-decoration: none;
