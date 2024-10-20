@@ -397,8 +397,8 @@ a:hover, a:active, a:focus {
 #about .about-img {
     background: url('../images/about-img.jpg') no-repeat;
     background-size: contain;
-    background-position: center;
-    width: 80%;
+    background-position: right center;
+    width: 50%;
     height: auto;
     min-width: 75vh;
 }
