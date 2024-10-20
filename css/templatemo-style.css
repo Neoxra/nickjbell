@@ -396,11 +396,10 @@ a:hover, a:active, a:focus {
 
 #about .about-img {
     background: url('../images/about-img.jpg') no-repeat;
-    background-size: contain;
-    background-position: right center;
-    width: 50%;
+    background-size: cover;
+    max-width: 100%;
     height: auto;
-    min-width: 75vh;
+    min-width: 50vh;
 }
 
 #about .about-thumb,
