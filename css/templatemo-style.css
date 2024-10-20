@@ -21,7 +21,7 @@ html,body {
 
 
 /*---------------------------------------
-    Typorgraphy              
+    Typography              
 -----------------------------------------*/
 
 h1,h2,h3,h4,h5,h6 {
@@ -171,12 +171,20 @@ footer {
   color: #E3AE57;
 }
 
+.color-dark {
+  color: #000000;
+}
+
 .bg-yellow {
   background: #E3AE57;
 }
 
 .bg-white {
   background: #ffffff;
+}
+
+.bg-orange {
+  background: #ea833a;
 }
 
 .bg-dark {
@@ -460,13 +468,6 @@ a:hover, a:active, a:focus {
 
 #projects .projects-thumb {
   padding: 52px 22px 52px 22px;
-  /* margin-bottom: 30px;
-  border-radius: 10px; */
-  /* transition: all 0.3s ease;
-  text-align: center;
-  color: #333;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  background-color: #fff; */
 }
 
 #projects .projects-thumb.bg-yellow {
@@ -479,12 +480,10 @@ a:hover, a:active, a:focus {
 
 #projects .projects-thumb.bg-dark {
   background-color: #333;
-  color: #fff;
 }
 
 #projects .projects-thumb.bg-light {
   background-color: #ffffff;
-  color: #333;
 }
 
 #projects .projects-thumb:hover {
@@ -494,7 +493,7 @@ a:hover, a:active, a:focus {
 #projects .projects-thumb .fa {
   font-size: 42px;
   padding-bottom: 22px;
-  color: #E9724C;
+  color: #f9af96;
 }
 
 #projects .projects-thumb a {
