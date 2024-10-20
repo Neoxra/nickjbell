@@ -114,6 +114,7 @@ p {
 
 #about,
 #service,
+#projects,
 #experience,
 #education,
 #contact {
@@ -124,6 +125,7 @@ p {
 #about .container, 
 #experience .container,
 #service .container,
+#projects .container,
 #education .container,
 #contact .container {
   width: 100%;
@@ -137,6 +139,7 @@ p {
 }
 
 #service,
+#projects,
 #quotes,
 footer {
   text-align: center;
@@ -694,6 +697,7 @@ footer {
   #about .container, 
   #experience .container,
   #service .container,
+  #projects .container,
   #education .container,
   #contact .container {
     padding-right: 15px;
