@@ -595,7 +595,6 @@ a:hover, a:active, a:focus {
   background-position: bottom center;
   width: 100%;
   min-height: 75vh;
-  height: 100vh;
 }
 
 #contact .contact-info {
