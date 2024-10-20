@@ -512,8 +512,10 @@ a:hover, a:active, a:focus {
 
 #experience .experience-img {
   background: url('../images/experience-img.jpg') no-repeat;
-  background-size: contain;
-  background-position: bottom center;
+  background-size: cover;
+  background-position: bottom;
+  max-width: 90%;
+  height: auto;
 }
 
 #experience .media-heading {
