@@ -459,17 +459,20 @@ a:hover, a:active, a:focus {
 #projects .projects-thumb .fa {
   font-size: 42px;
   padding-bottom: 22px;
+  color: #fff
 }
 
 #projects h3 {
   font-size: 24px;
   text-align: center;
+  color: #fff
 }
 
 #projects p {
   font-size: 18px;
   line-height: 30px;
   text-align: center;
+  color: #fff
 }
 #projects .projects-thumb a {
   display: inline-block;
@@ -477,6 +480,7 @@ a:hover, a:active, a:focus {
   font-weight: bold;
   text-decoration: none;
   transition: color 0.3s ease;
+  color: #fff
 }
 
 #projects .projects-thumb a:hover {
