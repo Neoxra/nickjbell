@@ -46,7 +46,7 @@ h2 {
 }
 
 h3 {
-  font-size: 26px;
+  font-size: 28px;
   line-height: 32px;
   padding-bottom: 6px;
 }
@@ -70,8 +70,8 @@ strong {
 }
 
 p {
-    color: #888;
-    font-size: 16px;
+    color: #ffffff;
+    font-size: 18px;
     font-weight: 300;
     line-height: 28px;
     letter-spacing: 0.2px;
@@ -406,7 +406,7 @@ a:hover, a:active, a:focus {
     background-position: 100% 100%;
     max-width: 100%;
     height: auto;
-    min-height: 45vh;
+    min-height: 50vh;
 }
 
 #about .about-thumb,
@@ -513,7 +513,7 @@ a:hover, a:active, a:focus {
 
 #experience .experience-img {
   background: url('../images/experience-img.jpg') no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-position: bottom;
   max-width: 100%;
   height: auto;
@@ -803,4 +803,12 @@ footer {
   footer {
     padding: 40px 0;
   }
+
+  #about .about-img {
+    background-size: cover; /* Ensures the image fills the screen on smaller devices */
+    background-position: 65% 40%; /* Keep the image centered */
+    height: auto; /* Adjust the height dynamically */
+    min-height: 70vh; /* Optional: Control height for smaller screens */
+  }
+
 }
