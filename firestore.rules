@@ -1,14 +1,15 @@
 rules_version = '2';
 
 // Firestore Security Rules for the public movie wall.
-// Paste these into: Firebase console -> Firestore Database -> Rules -> Publish.
+// Paste these into: Firebase console -> Firestore Database -> Rules -> Publish
+// (or `firebase deploy --only firestore:rules`).
 //
 // Guarantees:
 //   - Anyone can READ the list.
-//   - Anyone can ADD a movie, but ONLY if it matches the exact shape below
-//     (no extra fields, sane sizes, server-set timestamp).
-//   - NOBODY can edit or delete entries (no griefing / wiping the wall).
-//     You remove junk yourself from the Firebase console.
+//   - Anyone can ADD a movie, but ONLY if it matches the exact shape below.
+//   - The ONLY permitted update is bumping "votes" by exactly +1 (upvotes).
+//     No other field can be changed, and DELETE is denied entirely — nobody
+//     can edit titles or wipe the wall. You moderate from the console.
 
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -16,21 +17,36 @@ service cloud.firestore {
     match /movies/{movieId} {
       allow read: if true;
       allow create: if isValidMovie();
-      allow update, delete: if false;
+      allow update: if isVoteIncrement();
+      allow delete: if false;
     }
 
     function isValidMovie() {
       let d = request.resource.data;
       return d.keys().hasOnly(
-               ['tmdbId','title','year','posterPath','genre','genreIds','addedBy','createdAt'])
+               ['tmdbId','title','year','posterPath','genre','genreIds',
+                'voteAverage','overview','votes','addedBy','createdAt'])
         && d.tmdbId is int
         && d.title is string && d.title.size() > 0 && d.title.size() <= 200
         && (d.year is int || d.year == null)
         && (d.posterPath is string || d.posterPath == null)
         && d.genre is string && d.genre.size() <= 40
         && d.genreIds is list && d.genreIds.size() <= 10
+        && (d.voteAverage is number || d.voteAverage == null)
+        && (d.overview == null || (d.overview is string && d.overview.size() <= 1000))
+        && d.votes == 0
         && d.addedBy is string && d.addedBy.size() <= 40
         && d.createdAt == request.time;
+    }
+
+    // Only allow changing "votes", and only an increment of exactly 1.
+    function isVoteIncrement() {
+      let before = resource.data;
+      let after = request.resource.data;
+      let prev = before.keys().hasAll(['votes']) ? before.votes : 0;
+      return after.diff(before).affectedKeys().hasOnly(['votes'])
+        && after.votes is int
+        && after.votes == prev + 1;
     }
   }
 }

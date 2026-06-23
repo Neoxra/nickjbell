@@ -197,9 +197,18 @@
   function vote(id) {
     var voted = getVoted();
     if (voted.indexOf(id) !== -1) { flash("You've already loved this one ❤"); return; }
+
+    // Optimistic: record + re-render now so the button locks before the live
+    // snapshot fires (Firestore's local write triggers onSnapshot immediately).
+    voted.push(id); saveVoted(voted); render();
+
     moviesRef.doc(id).update({ votes: firebase.firestore.FieldValue.increment(1) })
-      .then(function () { voted.push(id); saveVoted(voted); })
-      .catch(function (e) { console.error(e); flash("Couldn't register your vote."); });
+      .catch(function (e) {
+        console.error(e);
+        saveVoted(getVoted().filter(function (x) { return x !== id; }));
+        render();
+        flash("Couldn't register your vote.");
+      });
   }
 
   // ---- detail modal ---------------------------------------------------------
