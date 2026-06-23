@@ -1,0 +1,205 @@
+/* ============================================================================
+   MOVIES PAGE STYLES  (loaded only by movies.html)
+   Palette pulled from templatemo-style.css:
+     yellow #E3AE57 · orange #ea833a / #E9724C · turquoise #50866f · dark #161616
+   ============================================================================ */
+
+.movies-page {
+  font-family: "Source Sans Pro", sans-serif;
+  background: #f4f4f4;
+  color: #161616;
+}
+
+.hidden { display: none !important; }
+
+/* ---- Hero / header -------------------------------------------------------- */
+
+.movies-hero {
+  background: #161616;
+  color: #fff;
+  padding: 140px 0 60px;
+  text-align: center;
+}
+.movies-hero h1 {
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 0 0 10px;
+}
+.movies-hero h1 .fa { color: #E3AE57; margin-right: 10px; }
+.movies-hero p {
+  color: #cfcfcf;
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: 17px;
+}
+
+/* ---- Add box -------------------------------------------------------------- */
+
+.movie-add-box {
+  position: relative;
+  max-width: 720px;
+  margin: 30px auto 0;
+  text-align: left;
+}
+.movie-add-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.movie-add-row .field-grow { flex: 1 1 280px; position: relative; }
+.movie-add-box input[type="text"] {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #161616;
+  background: #fff;
+}
+#movie-author { flex: 0 1 180px; }
+#add-movie-btn {
+  height: 48px;
+  padding: 0 28px;
+  border: none;
+  border-radius: 4px;
+  background: #E3AE57;
+  color: #161616;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+  white-space: nowrap;
+}
+#add-movie-btn:hover:not(:disabled) { background: #ea833a; color: #fff; }
+#add-movie-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+#add-feedback {
+  display: none;
+  margin-top: 12px;
+  color: #E3AE57;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ---- Search suggestions dropdown ----------------------------------------- */
+
+#movie-suggestions {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 6px;
+  position: absolute;
+  z-index: 50;
+  left: 0; right: 0;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  max-height: 360px;
+  overflow-y: auto;
+}
+.ms-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #161616;
+}
+.ms-item:hover { background: #f0e6d2; }
+.ms-item img { width: 36px; height: 54px; object-fit: cover; border-radius: 3px; flex: 0 0 auto; }
+.ms-title { flex: 1 1 auto; font-weight: 600; }
+.ms-title em { color: #888; font-weight: 400; font-style: normal; }
+.ms-genre {
+  flex: 0 0 auto;
+  font-size: 12px;
+  color: #ea833a;
+  background: #fff3e6;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.ms-empty { padding: 12px; color: #888; }
+
+/* ---- Status banner -------------------------------------------------------- */
+
+#movies-status {
+  max-width: 720px;
+  margin: 24px auto 0;
+  padding: 14px 18px;
+  background: #50866f;
+  color: #fff;
+  border-radius: 6px;
+  text-align: center;
+}
+#movies-status code { background: rgba(0,0,0,0.25); padding: 1px 6px; border-radius: 3px; color: #fff; }
+
+/* ---- The wall ------------------------------------------------------------- */
+
+.movies-wall-wrap { padding: 50px 0 80px; }
+.wall-empty { text-align: center; color: #888; font-size: 18px; padding: 40px 0; }
+
+.movie-cat { margin-bottom: 46px; }
+.cat-title {
+  font-weight: 700;
+  border-bottom: 3px solid #E3AE57;
+  padding-bottom: 10px;
+  margin: 0 0 22px;
+}
+.cat-count {
+  font-size: 14px;
+  color: #fff;
+  background: #ea833a;
+  border-radius: 20px;
+  padding: 2px 11px;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 22px;
+}
+.movie-card {
+  display: block;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+a.movie-card,
+a.movie-card:hover,
+a.movie-card:focus { text-decoration: none; cursor: pointer; }
+/* Only apply the hover-lift on real pointer (mouse) devices — on touch it
+   causes a "tap just hovers" dead first-tap. */
+@media (hover: hover) {
+  .movie-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 26px rgba(0,0,0,0.22);
+  }
+}
+.movie-card:active { transform: scale(0.98); }
+.movie-card .mc-info h4 { color: #161616; }
+.movie-card img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  display: block;
+  background: #161616;
+}
+.mc-info { padding: 12px 12px 14px; }
+.mc-info h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  line-height: 1.25;
+}
+.mc-meta { font-size: 13px; color: #888; }
+
+/* ---- Responsive ----------------------------------------------------------- */
+
+@media (max-width: 600px) {
+  .movies-hero { padding: 120px 0 40px; }
+  .movie-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 14px; }
+  #movie-author { flex: 1 1 100%; }
+}

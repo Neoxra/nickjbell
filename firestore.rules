@@ -1,0 +1,36 @@
+rules_version = '2';
+
+// Firestore Security Rules for the public movie wall.
+// Paste these into: Firebase console -> Firestore Database -> Rules -> Publish.
+//
+// Guarantees:
+//   - Anyone can READ the list.
+//   - Anyone can ADD a movie, but ONLY if it matches the exact shape below
+//     (no extra fields, sane sizes, server-set timestamp).
+//   - NOBODY can edit or delete entries (no griefing / wiping the wall).
+//     You remove junk yourself from the Firebase console.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /movies/{movieId} {
+      allow read: if true;
+      allow create: if isValidMovie();
+      allow update, delete: if false;
+    }
+
+    function isValidMovie() {
+      let d = request.resource.data;
+      return d.keys().hasOnly(
+               ['tmdbId','title','year','posterPath','genre','genreIds','addedBy','createdAt'])
+        && d.tmdbId is int
+        && d.title is string && d.title.size() > 0 && d.title.size() <= 200
+        && (d.year is int || d.year == null)
+        && (d.posterPath is string || d.posterPath == null)
+        && d.genre is string && d.genre.size() <= 40
+        && d.genreIds is list && d.genreIds.size() <= 10
+        && d.addedBy is string && d.addedBy.size() <= 40
+        && d.createdAt == request.time;
+    }
+  }
+}
