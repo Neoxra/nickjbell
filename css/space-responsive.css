@@ -1,0 +1,302 @@
+/*
+ * Space Theme - Responsive Styles
+ * Media queries for all breakpoints
+ */
+
+/* ============================================
+   Tablet (max-width: 992px)
+   ============================================ */
+@media (max-width: 992px) {
+     .about-grid,
+     .contact-grid {
+          grid-template-columns: 1fr;
+     }
+
+     .projects-grid {
+          grid-template-columns: 1fr;
+     }
+
+     .hero-title {
+          font-size: 3rem;
+     }
+
+     .constellation {
+          padding: 100px 40px 100px 160px;
+     }
+
+     .constellation-experience {
+          padding: 80px 40px 80px 160px;
+     }
+}
+
+/* ============================================
+   Mobile Landscape / Small Tablet (max-width: 768px)
+   ============================================ */
+@media (max-width: 768px) {
+     /* Navigation */
+     .space-nav {
+          padding: 15px 20px;
+     }
+
+     .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(5, 5, 16, 0.95);
+          flex-direction: column;
+          padding: 20px;
+          gap: 15px;
+          backdrop-filter: blur(10px);
+     }
+
+     .nav-links.active {
+          display: flex;
+     }
+
+     .nav-toggle {
+          display: flex;
+     }
+
+     /* Layout */
+     .constellation {
+          padding: 80px 30px 80px 120px;
+     }
+
+     .hero-title {
+          font-size: 2.2rem;
+     }
+
+     .section-title {
+          font-size: 1.8rem;
+     }
+
+     /* Planet and Rover */
+     .planet-container {
+          width: 800px;
+          height: 800px;
+          transform: translateY(-50%) translateX(-90%);
+     }
+
+     .rover {
+          width: 50px;
+          height: 33px;
+          /* 800px planet at -90% = -720px offset, center at -720+400 = -320px */
+          --rover-angle: calc(45deg - (var(--scroll-progress, 0) * 90deg));
+          transform:
+               translate(-320px, 50vh)
+               rotate(var(--rover-angle))
+               translateX(405px)
+               translate(-50%, -50%)
+               rotate(-90deg);
+     }
+
+     .constellation-experience {
+          padding: 60px 30px 60px 120px;
+     }
+
+     .constellation-container {
+          padding-bottom: 150px;
+     }
+
+     /* Constellation stars */
+     .constellation-stars {
+          position: relative;
+          width: 100%;
+          height: 180px;
+          top: auto;
+          right: auto;
+          margin-bottom: 20px;
+          transform: none;
+          opacity: 1;
+     }
+
+     .constellation.active .constellation-stars {
+          transform: none;
+     }
+
+     .constellation-label {
+          position: relative;
+          bottom: auto;
+          right: auto;
+          display: inline-block;
+          margin-top: 10px;
+     }
+
+     .space-footer {
+          margin-bottom: 120px;
+     }
+
+     /* Grids */
+     .about-grid,
+     .contact-grid {
+          grid-template-columns: 1fr;
+          gap: 25px;
+     }
+
+     .projects-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+     }
+
+     /* Experience section */
+     .constellation-experience {
+          padding: 60px 20px 60px 100px;
+     }
+
+     .experience-starmap {
+          min-height: auto;
+     }
+
+     .experience-starmap::before {
+          left: 9px;
+     }
+
+     .exp-star-item {
+          margin-bottom: 25px;
+          gap: 20px;
+     }
+
+     .exp-star-content {
+          max-width: 100%;
+          padding: 18px 22px;
+     }
+
+     .exp-star-content h3 {
+          font-size: 1.3rem;
+     }
+
+     .exp-star-content h4 {
+          font-size: 1.05rem;
+     }
+
+     .exp-star-content p {
+          font-size: 1rem;
+     }
+
+     .exp-star-marker {
+          width: 20px;
+          height: 20px;
+          min-width: 20px;
+     }
+}
+
+/* ============================================
+   Mobile Portrait (max-width: 480px)
+   ============================================ */
+@media (max-width: 480px) {
+     /* Typography */
+     .hero-title {
+          font-size: 1.8rem;
+     }
+
+     .hero-subtitle {
+          font-size: 1rem;
+     }
+
+     .hero-desc {
+          font-size: 0.95rem;
+     }
+
+     .section-title {
+          font-size: 1.5rem;
+     }
+
+     /* Social links */
+     .social-link {
+          width: 40px;
+          height: 40px;
+     }
+
+     /* Projects */
+     .project-card {
+          padding: 15px;
+     }
+
+     /* Layout */
+     .constellation {
+          padding: 60px 20px 60px 90px;
+          min-height: auto;
+     }
+
+     /* Planet and Rover */
+     .planet-container {
+          width: 600px;
+          height: 600px;
+          transform: translateY(-50%) translateX(-88%);
+     }
+
+     .rover {
+          width: 38px;
+          height: 25px;
+          /* 600px planet at -88% = -528px offset, center at -528+300 = -228px */
+          --rover-angle: calc(45deg - (var(--scroll-progress, 0) * 90deg));
+          transform:
+               translate(-228px, 50vh)
+               rotate(var(--rover-angle))
+               translateX(305px)
+               translate(-50%, -50%)
+               rotate(-90deg);
+     }
+
+     /* Experience section */
+     .constellation-experience {
+          padding: 50px 15px 50px 80px;
+     }
+
+     .constellation-stars {
+          height: 140px;
+     }
+
+     .constellation-label {
+          font-size: 0.65rem;
+          padding: 4px 8px;
+     }
+
+     .skill-tag {
+          font-size: 0.75rem;
+          padding: 4px 10px;
+     }
+
+     /* Experience items */
+     .experience-starmap::before {
+          left: 7px;
+     }
+
+     .exp-star-item {
+          gap: 15px;
+          margin-bottom: 20px;
+     }
+
+     .exp-star-content {
+          padding: 15px 18px;
+     }
+
+     .exp-star-content h3 {
+          font-size: 1.1rem;
+     }
+
+     .exp-star-content h4 {
+          font-size: 0.95rem;
+     }
+
+     .exp-star-content p {
+          font-size: 0.9rem;
+     }
+
+     .exp-date {
+          font-size: 0.85rem;
+     }
+
+     .exp-star-marker {
+          width: 16px;
+          height: 16px;
+          min-width: 16px;
+     }
+
+     .exp-star-marker::before {
+          width: 6px;
+          height: 6px;
+     }
+}

@@ -1,0 +1,1524 @@
+/*
+ * Space Theme Portfolio - Nicholas Bell
+ * Astronaut walking on spinning globe with constellation content
+ */
+
+/* ============================================
+   CSS Variables
+   ============================================ */
+:root {
+     --color-orange: #E9724C;
+     --color-gold: #E3AE57;
+     --color-turquoise: #50866f;
+     --color-dark: #0a0a1a;
+     --color-darker: #050510;
+     --color-star: #ffffff;
+     --color-star-glow: rgba(227, 174, 87, 0.8);
+     --globe-rotation: 0deg;
+     --scroll-progress: 0;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+* {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+}
+
+html {
+     scroll-behavior: smooth;
+}
+
+body {
+     font-family: 'Source Sans Pro', sans-serif;
+     background: var(--color-darker);
+     color: #ffffff;
+     overflow-x: hidden;
+     min-height: 100vh;
+}
+
+/* ============================================
+   Starfield Background
+   ============================================ */
+.starfield {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     z-index: 0;
+     background: linear-gradient(180deg,
+          var(--color-darker) 0%,
+          #0d0d20 30%,
+          #121228 60%,
+          #1a1a35 100%
+     );
+     overflow: hidden;
+}
+
+.stars {
+     position: absolute;
+     width: 100%;
+     height: 100%;
+     background-repeat: repeat;
+}
+
+.stars-small {
+     background-image:
+          radial-gradient(1px 1px at 20px 30px, white, transparent),
+          radial-gradient(1px 1px at 40px 70px, rgba(255,255,255,0.8), transparent),
+          radial-gradient(1px 1px at 50px 160px, rgba(255,255,255,0.6), transparent),
+          radial-gradient(1px 1px at 90px 40px, white, transparent),
+          radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.7), transparent),
+          radial-gradient(1px 1px at 160px 120px, white, transparent),
+          radial-gradient(1px 1px at 200px 50px, rgba(255,255,255,0.5), transparent),
+          radial-gradient(1px 1px at 250px 140px, white, transparent),
+          radial-gradient(1px 1px at 280px 90px, rgba(255,255,255,0.8), transparent),
+          radial-gradient(1px 1px at 320px 170px, white, transparent);
+     background-size: 350px 200px;
+     animation: twinkle 4s ease-in-out infinite;
+}
+
+.stars-medium {
+     background-image:
+          radial-gradient(1.5px 1.5px at 100px 50px, var(--color-gold), transparent),
+          radial-gradient(2px 2px at 200px 150px, white, transparent),
+          radial-gradient(1.5px 1.5px at 300px 100px, rgba(255,255,255,0.9), transparent),
+          radial-gradient(2px 2px at 400px 200px, var(--color-gold), transparent),
+          radial-gradient(1.5px 1.5px at 150px 250px, white, transparent);
+     background-size: 500px 300px;
+     animation: twinkle 6s ease-in-out infinite 1s;
+}
+
+.stars-large {
+     background-image:
+          radial-gradient(2.5px 2.5px at 250px 100px, var(--color-gold), transparent),
+          radial-gradient(3px 3px at 450px 300px, white, transparent),
+          radial-gradient(2px 2px at 650px 200px, var(--color-orange), transparent);
+     background-size: 800px 400px;
+     animation: twinkle 8s ease-in-out infinite 2s;
+}
+
+@keyframes twinkle {
+     0%, 100% { opacity: 1; }
+     50% { opacity: 0.5; }
+}
+
+/* ============================================
+   Navigation
+   ============================================ */
+.space-nav {
+     position: fixed;
+     top: 0;
+     left: 0;
+     right: 0;
+     z-index: 100;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     padding: 20px 40px;
+     background: linear-gradient(180deg, rgba(5,5,16,0.9) 0%, transparent 100%);
+}
+
+.nav-brand {
+     font-family: 'Orbitron', sans-serif;
+     font-size: 1.4rem;
+     font-weight: 700;
+     color: var(--color-gold);
+     text-shadow: 0 0 20px rgba(227, 174, 87, 0.5);
+}
+
+.nav-links {
+     display: flex;
+     gap: 30px;
+}
+
+.nav-link {
+     color: rgba(255,255,255,0.7);
+     text-decoration: none;
+     font-size: 0.9rem;
+     letter-spacing: 1px;
+     text-transform: uppercase;
+     transition: all 0.3s ease;
+     position: relative;
+}
+
+.nav-link::after {
+     content: '';
+     position: absolute;
+     bottom: -5px;
+     left: 0;
+     width: 0;
+     height: 2px;
+     background: var(--color-gold);
+     transition: width 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+     color: var(--color-gold);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+     width: 100%;
+}
+
+.nav-toggle {
+     display: none;
+     flex-direction: column;
+     gap: 5px;
+     background: none;
+     border: none;
+     cursor: pointer;
+     padding: 5px;
+}
+
+.nav-toggle span {
+     width: 25px;
+     height: 2px;
+     background: var(--color-gold);
+     transition: all 0.3s ease;
+}
+
+/* ============================================
+   Main Content Container
+   ============================================ */
+.constellation-container {
+     position: relative;
+     z-index: 10;
+     padding-bottom: 200px;
+}
+
+/* ============================================
+   Constellation Sections
+   ============================================ */
+.constellation {
+     min-height: 100vh;
+     display: flex;
+     align-items: center;
+     justify-content: flex-start;
+     padding: 100px 60px 100px 180px;
+     position: relative;
+     overflow: hidden;
+}
+
+.constellation .constellation-content {
+     opacity: 0;
+     transform: translateX(200px);
+     transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.constellation.active .constellation-content {
+     opacity: 1;
+     transform: translateX(0);
+}
+
+.constellation.active .constellation-stars {
+     opacity: 1;
+     transform: translateX(0);
+}
+
+/* Constellation label */
+.constellation-label {
+     position: absolute;
+     bottom: 20px;
+     right: 20px;
+     font-family: 'Orbitron', sans-serif;
+     font-size: 0.85rem;
+     color: var(--color-gold);
+     letter-spacing: 3px;
+     text-transform: uppercase;
+     opacity: 0;
+     transition: opacity 0.5s ease 0.3s;
+     text-shadow: 0 0 15px rgba(227, 174, 87, 0.8);
+     background: rgba(5, 5, 16, 0.6);
+     padding: 8px 15px;
+     border: 1px solid rgba(227, 174, 87, 0.3);
+     border-radius: 4px;
+}
+
+.constellation.active .constellation-label {
+     opacity: 1;
+}
+
+.constellation-stars {
+     position: absolute;
+     top: 80px;
+     right: 5%;
+     width: 500px;
+     height: 350px;
+     transform: translateX(100px);
+     pointer-events: none;
+     opacity: 0;
+     transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.constellation-svg {
+     width: 100%;
+     height: 100%;
+     position: absolute;
+}
+
+.star-line {
+     stroke: var(--color-gold);
+     stroke-width: 2;
+     opacity: 0;
+     stroke-dasharray: 200;
+     stroke-dashoffset: 200;
+     filter: drop-shadow(0 0 5px var(--color-gold));
+}
+
+.constellation.active .star-line {
+     opacity: 0.1;
+     animation: drawLine 1.5s ease forwards;
+}
+
+@keyframes drawLine {
+     to { stroke-dashoffset: 0; }
+}
+
+.star-node {
+     fill: var(--color-star);
+     filter: drop-shadow(0 0 10px var(--color-star-glow)) drop-shadow(0 0 20px var(--color-gold));
+     opacity: 0;
+     transform-origin: center;
+}
+
+.constellation.active .star-node {
+     opacity: 1;
+     animation: starAppear 0.5s ease forwards;
+}
+
+.star-node.pulse {
+     animation: starPulse 2s ease-in-out infinite;
+}
+
+@keyframes starAppear {
+     from {
+          opacity: 0;
+          transform: scale(0);
+     }
+     to {
+          opacity: 1;
+          transform: scale(1);
+     }
+}
+
+@keyframes starPulse {
+     0%, 100% {
+          filter: drop-shadow(0 0 6px var(--color-star-glow));
+          r: 8;
+     }
+     50% {
+          filter: drop-shadow(0 0 15px var(--color-gold)) drop-shadow(0 0 30px var(--color-orange));
+          r: 10;
+     }
+}
+
+/* Constellation Content */
+.constellation-content {
+     max-width: 900px;
+     width: 100%;
+     position: relative;
+     z-index: 5;
+}
+
+.section-label {
+     font-size: 1rem;
+     color: var(--color-turquoise);
+     text-transform: uppercase;
+     letter-spacing: 3px;
+     margin-bottom: 12px;
+}
+
+.section-title {
+     font-family: 'Orbitron', sans-serif;
+     font-size: 3.5rem;
+     color: var(--color-gold);
+     margin-bottom: 40px;
+     text-shadow: 0 0 30px rgba(227, 174, 87, 0.3);
+}
+
+/* ============================================
+   Home Section
+   ============================================ */
+.hero-title {
+     font-family: 'Orbitron', sans-serif;
+     font-size: 5rem;
+     font-weight: 700;
+     line-height: 1.1;
+     margin-bottom: 15px;
+}
+
+.hero-title .highlight {
+     color: var(--color-gold);
+     text-shadow: 0 0 40px rgba(227, 174, 87, 0.5);
+}
+
+.hero-subtitle {
+     font-size: 1.8rem;
+     color: var(--color-orange);
+     margin-bottom: 25px;
+     letter-spacing: 2px;
+}
+
+.hero-desc {
+     font-size: 1.3rem;
+     color: rgba(255,255,255,0.8);
+     max-width: 550px;
+     line-height: 1.7;
+     margin-bottom: 35px;
+}
+
+.social-links {
+     display: flex;
+     gap: 15px;
+}
+
+.social-link {
+     width: 50px;
+     height: 50px;
+     border: 2px solid rgba(227, 174, 87, 0.5);
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     color: var(--color-gold);
+     font-size: 1.2rem;
+     text-decoration: none;
+     transition: all 0.3s ease;
+}
+
+.social-link:hover {
+     background: var(--color-gold);
+     color: var(--color-dark);
+     transform: translateY(-5px);
+     box-shadow: 0 10px 30px rgba(227, 174, 87, 0.4);
+}
+
+/* ============================================
+   About Section
+   ============================================ */
+.about-grid {
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     gap: 40px;
+}
+
+.about-text p {
+     font-size: 1.35rem;
+     line-height: 1.8;
+     color: rgba(255,255,255,0.85);
+}
+
+.skills-panel {
+     background: rgba(255,255,255,0.03);
+     border: 1px solid rgba(227, 174, 87, 0.2);
+     border-radius: 15px;
+     padding: 25px;
+     backdrop-filter: blur(10px);
+}
+
+.skills-panel h3 {
+     color: var(--color-gold);
+     margin-bottom: 15px;
+     font-family: 'Orbitron', sans-serif;
+}
+
+.skill-tags {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 10px;
+     margin-bottom: 25px;
+}
+
+.skill-tag {
+     background: rgba(227, 174, 87, 0.1);
+     border: 1px solid rgba(227, 174, 87, 0.3);
+     color: var(--color-gold);
+     padding: 8px 16px;
+     border-radius: 20px;
+     font-size: 1rem;
+     transition: all 0.3s ease;
+}
+
+.skill-tag:hover {
+     background: rgba(227, 174, 87, 0.2);
+     box-shadow: 0 0 15px rgba(227, 174, 87, 0.3);
+}
+
+.skill-bar {
+     margin-bottom: 15px;
+}
+
+.skill-name {
+     font-size: 0.9rem;
+     color: rgba(255,255,255,0.8);
+     margin-bottom: 8px;
+     display: block;
+}
+
+.skill-progress {
+     height: 6px;
+     background: rgba(255,255,255,0.1);
+     border-radius: 3px;
+     overflow: hidden;
+}
+
+.skill-fill {
+     height: 100%;
+     width: var(--fill);
+     background: linear-gradient(90deg, var(--color-orange), var(--color-gold));
+     border-radius: 3px;
+     box-shadow: 0 0 10px var(--color-gold);
+     transform: scaleX(0);
+     transform-origin: left;
+     transition: transform 1s ease;
+}
+
+.constellation.active .skill-fill {
+     transform: scaleX(1);
+}
+
+/* ============================================
+   Projects Section
+   ============================================ */
+.projects-grid {
+     display: grid;
+     grid-template-columns: repeat(2, 1fr);
+     gap: 25px;
+}
+
+.project-card {
+     background: rgba(255,255,255,0.03);
+     border: 1px solid rgba(227, 174, 87, 0.15);
+     border-radius: 15px;
+     padding: 30px;
+     transition: all 0.4s ease;
+     position: relative;
+     overflow: hidden;
+}
+
+.project-card::before {
+     content: '';
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     height: 3px;
+     background: linear-gradient(90deg, var(--color-orange), var(--color-gold), var(--color-turquoise));
+     transform: scaleX(0);
+     transition: transform 0.4s ease;
+}
+
+.project-card:hover {
+     transform: translateY(-10px);
+     border-color: var(--color-gold);
+     box-shadow: 0 20px 50px rgba(0,0,0,0.3), 0 0 30px rgba(227, 174, 87, 0.1);
+}
+
+.project-card:hover::before {
+     transform: scaleX(1);
+}
+
+.project-icon {
+     width: 60px;
+     height: 60px;
+     background: linear-gradient(135deg, var(--color-orange), var(--color-gold));
+     border-radius: 12px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-bottom: 20px;
+     font-size: 1.5rem;
+     color: white;
+}
+
+.project-card h3 {
+     color: white;
+     font-size: 1.5rem;
+     margin-bottom: 12px;
+}
+
+.project-card p {
+     color: rgba(255,255,255,0.7);
+     font-size: 1.15rem;
+     line-height: 1.6;
+     margin-bottom: 15px;
+}
+
+.project-link {
+     color: var(--color-gold);
+     text-decoration: none;
+     font-size: 0.9rem;
+     display: inline-flex;
+     align-items: center;
+     gap: 8px;
+     transition: all 0.3s ease;
+}
+
+.project-link:hover {
+     color: var(--color-orange);
+     gap: 12px;
+}
+
+/* ============================================
+   Experience Section - Constellation Layout
+   ============================================ */
+.constellation-experience {
+     padding: 80px 60px 80px 180px;
+}
+
+.experience-constellation-layout {
+     max-width: 100%;
+     width: 100%;
+}
+
+.experience-title {
+     text-align: center;
+     margin-bottom: 40px;
+}
+
+.experience-starmap {
+     position: relative;
+     width: 100%;
+     min-height: 800px;
+     display: flex;
+     flex-direction: column;
+     gap: 0;
+}
+
+/* Vertical constellation line */
+.experience-starmap::before {
+     content: '';
+     position: absolute;
+     left: 11px;
+     top: 5%;
+     bottom: 12%;
+     width: 2px;
+     background: linear-gradient(180deg,
+          var(--color-gold) 0%,
+          var(--color-orange) 50%,
+          var(--color-turquoise) 100%
+     );
+     opacity: 0.6;
+     filter: drop-shadow(0 0 6px var(--color-gold));
+     z-index: 1;
+}
+
+/* Experience star items */
+.exp-star-item {
+     position: relative;
+     display: flex;
+     align-items: flex-start;
+     gap: 25px;
+     z-index: 5;
+     opacity: 0;
+     transform: translateX(-30px);
+     transition: opacity 0.5s ease, transform 0.5s ease;
+     margin-bottom: 35px;
+}
+
+.exp-star-item:last-child {
+     margin-bottom: 0;
+}
+
+.constellation.active .exp-star-item {
+     opacity: 1;
+     transform: translateX(0);
+}
+
+.constellation.active .exp-star-1 { transition-delay: 0.1s; }
+.constellation.active .exp-star-2 { transition-delay: 0.2s; }
+.constellation.active .exp-star-3 { transition-delay: 0.3s; }
+.constellation.active .exp-star-4 { transition-delay: 0.4s; }
+.constellation.active .exp-star-5 { transition-delay: 0.5s; }
+
+/* Star markers */
+.exp-star-marker {
+     width: 24px;
+     height: 24px;
+     min-width: 24px;
+     background: var(--color-gold);
+     border-radius: 50%;
+     box-shadow:
+          0 0 20px var(--color-gold),
+          0 0 40px rgba(227, 174, 87, 0.5),
+          0 0 60px rgba(227, 174, 87, 0.3);
+     position: relative;
+     margin-top: 5px;
+}
+
+.exp-star-marker::before {
+     content: '';
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     width: 10px;
+     height: 10px;
+     background: white;
+     border-radius: 50%;
+}
+
+.exp-star-marker.pulse {
+     animation: starMarkerPulse 2s ease-in-out infinite;
+}
+
+@keyframes starMarkerPulse {
+     0%, 100% {
+          box-shadow:
+               0 0 20px var(--color-gold),
+               0 0 40px rgba(227, 174, 87, 0.5);
+          transform: scale(1);
+     }
+     50% {
+          box-shadow:
+               0 0 30px var(--color-gold),
+               0 0 60px rgba(227, 174, 87, 0.7),
+               0 0 80px rgba(233, 114, 76, 0.4);
+          transform: scale(1.15);
+     }
+}
+
+.exp-star-marker.edu-marker {
+     background: var(--color-turquoise);
+     box-shadow:
+          0 0 20px var(--color-turquoise),
+          0 0 40px rgba(80, 134, 111, 0.5);
+}
+
+/* Experience content */
+.exp-star-content {
+     max-width: 500px;
+     background: rgba(5, 5, 16, 0.7);
+     padding: 22px 28px;
+     border-radius: 12px;
+     border: 1px solid rgba(227, 174, 87, 0.2);
+     backdrop-filter: blur(10px);
+}
+
+.exp-star-item.current .exp-star-content {
+     border-color: var(--color-gold);
+     box-shadow: 0 0 30px rgba(227, 174, 87, 0.15);
+}
+
+.exp-star-item.education .exp-star-content {
+     border-color: rgba(80, 134, 111, 0.4);
+}
+
+.exp-date {
+     font-size: 1.05rem;
+     color: var(--color-turquoise);
+     letter-spacing: 1px;
+     font-weight: 600;
+}
+
+.exp-star-content h3 {
+     color: white;
+     font-size: 1.6rem;
+     margin: 10px 0;
+     font-weight: 600;
+}
+
+.exp-star-content h3 i {
+     margin-right: 10px;
+     color: var(--color-turquoise);
+}
+
+.exp-star-content h4 {
+     color: var(--color-gold);
+     font-size: 1.25rem;
+     font-weight: 500;
+     margin-bottom: 12px;
+}
+
+.exp-star-content p {
+     color: rgba(255,255,255,0.85);
+     font-size: 1.15rem;
+     line-height: 1.6;
+     margin: 0;
+}
+
+/* ============================================
+   Contact Section
+   ============================================ */
+.contact-intro {
+     color: rgba(255,255,255,0.8);
+     margin-bottom: 30px;
+     font-size: 1.1rem;
+}
+
+.contact-grid {
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     gap: 40px;
+}
+
+.contact-form {
+     display: flex;
+     flex-direction: column;
+     gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+     background: rgba(255,255,255,0.05);
+     border: 1px solid rgba(227, 174, 87, 0.2);
+     border-radius: 10px;
+     padding: 15px 20px;
+     color: white;
+     font-family: inherit;
+     font-size: 1rem;
+     transition: all 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+     outline: none;
+     border-color: var(--color-gold);
+     box-shadow: 0 0 20px rgba(227, 174, 87, 0.2);
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+     color: rgba(255,255,255,0.4);
+}
+
+.submit-btn {
+     background: linear-gradient(90deg, var(--color-orange), var(--color-gold));
+     border: none;
+     border-radius: 10px;
+     padding: 15px 30px;
+     color: white;
+     font-size: 1rem;
+     font-weight: 600;
+     cursor: pointer;
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     gap: 10px;
+     transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+     transform: translateY(-3px);
+     box-shadow: 0 10px 30px rgba(227, 174, 87, 0.4);
+}
+
+.contact-info {
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+     padding-top: 20px;
+}
+
+.contact-item {
+     display: flex;
+     align-items: center;
+     gap: 15px;
+     color: rgba(255,255,255,0.8);
+}
+
+.contact-item i {
+     width: 45px;
+     height: 45px;
+     background: rgba(227, 174, 87, 0.1);
+     border: 1px solid rgba(227, 174, 87, 0.3);
+     border-radius: 10px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     color: var(--color-gold);
+     font-size: 1.1rem;
+}
+
+.contact-item a {
+     color: var(--color-gold);
+     text-decoration: none;
+     transition: color 0.3s ease;
+}
+
+.contact-item a:hover {
+     color: var(--color-orange);
+}
+
+/* ============================================
+   Planet Container (Fixed Left Edge)
+   ============================================ */
+.planet-container {
+     position: fixed;
+     top: 50%;
+     left: 0;
+     transform: translateY(-50%) translateX(-92%);
+     width: 1200px;
+     height: 1200px;
+     z-index: 50;
+     pointer-events: none;
+     overflow: visible;
+}
+
+/* 8-Bit Pixel Planet */
+.pixel-planet {
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     /* Rotate the entire planet based on scroll */
+     transform: rotate(calc(var(--scroll-progress, 0) * 360deg));
+     transition: transform 0.1s linear;
+}
+
+.planet-svg {
+     width: 100%;
+     height: 100%;
+     image-rendering: pixelated;
+     image-rendering: crisp-edges;
+     filter: drop-shadow(0 0 40px rgba(80, 134, 111, 0.3));
+}
+
+.planet-surface-group {
+     transform: translateX(0);
+}
+
+/* Planet colors */
+.ocean {
+     fill: #1a3a5c;
+}
+
+.land {
+     fill: var(--color-turquoise);
+}
+
+.land-1 {
+     fill: var(--color-orange);
+}
+
+.land-2 {
+     fill: var(--color-gold);
+}
+
+.land-3 {
+     fill: var(--color-turquoise);
+}
+
+.ice {
+     fill: #e8e8f0;
+}
+
+.ice-detail {
+     fill: #d0d0e0;
+}
+
+/* Planet shading - gives 3D effect */
+.planet-shadow {
+     fill: url(#planetShade);
+     fill: transparent;
+     stroke: none;
+}
+
+.planet-shadow {
+     fill: none;
+     stroke: none;
+     background: radial-gradient(circle at 30% 30%, transparent 40%, rgba(0,0,0,0.6) 100%);
+}
+
+/* Add shading via CSS */
+.pixel-planet::after {
+     content: '';
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     border-radius: 50%;
+     background: radial-gradient(circle at 35% 35%,
+          transparent 0%,
+          transparent 30%,
+          rgba(0, 0, 0, 0.2) 50%,
+          rgba(0, 0, 0, 0.5) 70%,
+          rgba(5, 5, 16, 0.8) 90%
+     );
+     pointer-events: none;
+}
+
+/* Atmosphere glow */
+.planet-glow {
+     fill: none;
+     stroke: rgba(80, 134, 111, 0.3);
+     stroke-width: 4;
+}
+
+/* Edge fade to blend with background */
+.pixel-planet::before {
+     content: '';
+     position: absolute;
+     top: -40px;
+     left: -40px;
+     right: -40px;
+     bottom: -40px;
+     border-radius: 50%;
+     background: radial-gradient(circle,
+          transparent 45%,
+          rgba(5, 5, 16, 0.5) 55%,
+          rgba(5, 5, 16, 0.9) 70%,
+          var(--color-darker) 85%
+     );
+     pointer-events: none;
+}
+
+/* 8-Bit Rover - travels along planet arc as scroll progress */
+.rover {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 70px;
+     height: 47px;
+     z-index: 60;
+     pointer-events: none;
+
+     /* Rover climbs UP the arc as you scroll DOWN the page */
+     /* Start at bottom of arc (45deg), end at top (-45deg) */
+     --rover-angle: calc(45deg - (var(--scroll-progress, 0) * 90deg));
+
+     transform:
+          translate(-504px, 50vh)
+          rotate(var(--rover-angle))
+          translateX(605px)
+          translate(-50%, -50%)
+          rotate(-90deg);
+
+     transition: transform 0.1s ease-out;
+}
+
+.rover-svg {
+     width: 100%;
+     height: 100%;
+     filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+     image-rendering: pixelated;
+     image-rendering: crisp-edges;
+}
+
+/* Rover Colors - 8-bit style */
+.antenna-stem {
+     fill: #888888;
+}
+
+.antenna-ball {
+     fill: var(--color-orange);
+     animation: antennaBlink 1.5s step-end infinite;
+}
+
+@keyframes antennaBlink {
+     0%, 50% { fill: var(--color-orange); }
+     51%, 100% { fill: var(--color-gold); }
+}
+
+.mast {
+     fill: #777777;
+}
+
+.camera {
+     fill: #444444;
+}
+
+.camera-lens {
+     fill: var(--color-turquoise);
+     animation: cameraGlow 2s step-end infinite;
+}
+
+@keyframes cameraGlow {
+     0%, 50% { fill: var(--color-turquoise); }
+     51%, 100% { fill: #8ed4b8; }
+}
+
+.body-main {
+     fill: #d4d4d4;
+     stroke: #aaaaaa;
+     stroke-width: 2;
+}
+
+.body-top {
+     fill: #e8e8e8;
+}
+
+.solar-panel {
+     fill: #2a4a6a;
+}
+
+.solar-line {
+     stroke: #1a3a5a;
+     stroke-width: 2;
+}
+
+.panel {
+     fill: #333333;
+}
+
+.light {
+     fill: var(--color-gold);
+     animation: lightBlink 0.8s step-end infinite;
+}
+
+.light-2 {
+     animation-delay: 0.4s;
+}
+
+@keyframes lightBlink {
+     0%, 70% { fill: var(--color-gold); }
+     71%, 100% { fill: #ffe4a0; }
+}
+
+.vent {
+     fill: #555555;
+}
+
+.status-light {
+     fill: #44ff44;
+     animation: statusPulse 1s step-end infinite;
+}
+
+@keyframes statusPulse {
+     0%, 50% { fill: #44ff44; }
+     51%, 100% { fill: #22aa22; }
+}
+
+.wheel-mount {
+     fill: #666666;
+}
+
+.wheel-outer {
+     fill: #333333;
+     stroke: #222222;
+     stroke-width: 2;
+}
+
+.wheel-inner {
+     fill: #444444;
+}
+
+.wheel-spoke {
+     fill: #555555;
+}
+
+/* Curiosity Rover specific parts */
+.rtg {
+     fill: #8b4513;
+}
+
+.rtg-fins {
+     fill: #654321;
+}
+
+.rtg-top {
+     fill: #a0522d;
+}
+
+.hga-mast {
+     fill: #888888;
+}
+
+.hga-dish {
+     fill: #d4d4d4;
+}
+
+.mast-base {
+     fill: #666666;
+}
+
+.mast-stem {
+     fill: #777777;
+}
+
+.mast-head {
+     fill: #888888;
+}
+
+.mastcam {
+     fill: #222222;
+}
+
+.chemcam {
+     fill: var(--color-orange);
+     animation: chemcamPulse 2s step-end infinite;
+}
+
+@keyframes chemcamPulse {
+     0%, 70% { fill: var(--color-orange); }
+     71%, 100% { fill: var(--color-gold); }
+}
+
+.panel-dark {
+     fill: #333333;
+}
+
+.panel-light {
+     fill: #555555;
+}
+
+.hazcam {
+     fill: #222222;
+}
+
+.instrument-light {
+     fill: var(--color-turquoise);
+     animation: instrumentBlink 1.2s step-end infinite;
+}
+
+@keyframes instrumentBlink {
+     0%, 60% { fill: var(--color-turquoise); }
+     61%, 100% { fill: #8ed4b8; }
+}
+
+.arm-segment {
+     fill: #777777;
+}
+
+.arm-turret {
+     fill: #666666;
+}
+
+.suspension {
+     fill: #555555;
+}
+
+.rocker {
+     fill: #666666;
+}
+
+.wheel-tread {
+     fill: #222222;
+}
+
+.wheel-hub {
+     fill: #444444;
+}
+
+/* Wheel rotation animation */
+.wheel {
+     transform-origin: center;
+}
+
+.wheel-1 { animation: wheelSpin 0.4s linear infinite; }
+.wheel-2 { animation: wheelSpin 0.4s linear infinite 0.05s; }
+.wheel-3 { animation: wheelSpin 0.4s linear infinite 0.1s; }
+.wheel-4 { animation: wheelSpin 0.4s linear infinite 0.15s; }
+.wheel-5 { animation: wheelSpin 0.4s linear infinite 0.2s; }
+
+@keyframes wheelSpin {
+     0% { transform: translateY(0); }
+     25% { transform: translateY(-2px); }
+     50% { transform: translateY(0); }
+     75% { transform: translateY(2px); }
+     100% { transform: translateY(0); }
+}
+
+/* Rover wheel animation only - no bounce since rover moves on arc */
+
+/* Scroll progress is now shown by rover position on planet arc */
+
+/* ============================================
+   Footer
+   ============================================ */
+.space-footer {
+     position: relative;
+     z-index: 10;
+     text-align: center;
+     padding: 30px;
+     color: rgba(255,255,255,0.5);
+     font-size: 0.9rem;
+     margin-bottom: 100px;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 992px) {
+     .about-grid,
+     .contact-grid {
+          grid-template-columns: 1fr;
+     }
+
+     .projects-grid {
+          grid-template-columns: 1fr;
+     }
+
+     .hero-title {
+          font-size: 3rem;
+     }
+
+     .constellation {
+          padding: 100px 40px 100px 160px;
+     }
+
+     .constellation-experience {
+          padding: 80px 40px 80px 160px;
+     }
+}
+
+@media (max-width: 768px) {
+     .space-nav {
+          padding: 15px 20px;
+     }
+
+     .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(5, 5, 16, 0.95);
+          flex-direction: column;
+          padding: 20px;
+          gap: 15px;
+          backdrop-filter: blur(10px);
+     }
+
+     .nav-links.active {
+          display: flex;
+     }
+
+     .nav-toggle {
+          display: flex;
+     }
+
+     .constellation {
+          padding: 80px 20px 80px 20px;
+     }
+
+     .hero-title {
+          font-size: 2.2rem;
+     }
+
+     .section-title {
+          font-size: 1.8rem;
+     }
+
+     .planet-container {
+          width: 800px;
+          height: 800px;
+          transform: translateY(-50%) translateX(-90%);
+     }
+
+     .rover {
+          width: 50px;
+          height: 33px;
+          /* 800px planet at -90% = -720px offset, center at -720+400 = -320px */
+          --rover-angle: calc(45deg - (var(--scroll-progress, 0) * 90deg));
+          transform:
+               translate(-320px, 50vh)
+               rotate(var(--rover-angle))
+               translateX(405px)
+               translate(-50%, -50%)
+               rotate(-90deg);
+     }
+
+     .constellation {
+          padding: 80px 30px 80px 120px;
+     }
+
+     .constellation-experience {
+          padding: 60px 30px 60px 120px;
+     }
+
+     .constellation-container {
+          padding-bottom: 150px;
+     }
+
+     .constellation-stars {
+          position: relative;
+          width: 100%;
+          height: 180px;
+          top: auto;
+          right: auto;
+          margin-bottom: 20px;
+          transform: none;
+          opacity: 1;
+     }
+
+     .constellation.active .constellation-stars {
+          transform: none;
+     }
+
+     .constellation-label {
+          position: relative;
+          bottom: auto;
+          right: auto;
+          display: inline-block;
+          margin-top: 10px;
+     }
+
+     .space-footer {
+          margin-bottom: 120px;
+     }
+
+     .about-grid,
+     .contact-grid {
+          grid-template-columns: 1fr;
+          gap: 25px;
+     }
+
+     .projects-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+     }
+
+     /* Experience constellation responsive */
+     .constellation-experience {
+          padding: 60px 20px 60px 100px;
+     }
+
+     .experience-starmap {
+          min-height: auto;
+     }
+
+     .experience-starmap::before {
+          left: 9px;
+     }
+
+     .exp-star-item {
+          margin-bottom: 25px;
+          gap: 20px;
+     }
+
+     .exp-star-content {
+          max-width: 100%;
+          padding: 18px 22px;
+     }
+
+     .exp-star-content h3 {
+          font-size: 1.3rem;
+     }
+
+     .exp-star-content h4 {
+          font-size: 1.05rem;
+     }
+
+     .exp-star-content p {
+          font-size: 1rem;
+     }
+
+     .exp-star-marker {
+          width: 20px;
+          height: 20px;
+          min-width: 20px;
+     }
+}
+
+@media (max-width: 480px) {
+     .hero-title {
+          font-size: 1.8rem;
+     }
+
+     .hero-subtitle {
+          font-size: 1rem;
+     }
+
+     .hero-desc {
+          font-size: 0.95rem;
+     }
+
+     .social-link {
+          width: 40px;
+          height: 40px;
+     }
+
+     .project-card {
+          padding: 15px;
+     }
+
+     .constellation {
+          padding: 70px 15px 70px 15px;
+          min-height: auto;
+     }
+
+     .planet-container {
+          width: 600px;
+          height: 600px;
+          transform: translateY(-50%) translateX(-88%);
+     }
+
+     .rover {
+          width: 38px;
+          height: 25px;
+          /* 600px planet at -88% = -528px offset, center at -528+300 = -228px */
+          --rover-angle: calc(45deg - (var(--scroll-progress, 0) * 90deg));
+          transform:
+               translate(-228px, 50vh)
+               rotate(var(--rover-angle))
+               translateX(305px)
+               translate(-50%, -50%)
+               rotate(-90deg);
+     }
+
+     .constellation {
+          padding: 60px 20px 60px 90px;
+     }
+
+     .constellation-experience {
+          padding: 50px 15px 50px 80px;
+     }
+
+     .constellation-stars {
+          height: 140px;
+     }
+
+     .constellation-label {
+          font-size: 0.65rem;
+          padding: 4px 8px;
+     }
+
+     .section-title {
+          font-size: 1.5rem;
+     }
+
+     .skill-tag {
+          font-size: 0.75rem;
+          padding: 4px 10px;
+     }
+
+     /* Experience section mobile */
+     .experience-starmap::before {
+          left: 7px;
+     }
+
+     .exp-star-item {
+          gap: 15px;
+          margin-bottom: 20px;
+     }
+
+     .exp-star-content {
+          padding: 15px 18px;
+     }
+
+     .exp-star-content h3 {
+          font-size: 1.1rem;
+     }
+
+     .exp-star-content h4 {
+          font-size: 0.95rem;
+     }
+
+     .exp-star-content p {
+          font-size: 0.9rem;
+     }
+
+     .exp-date {
+          font-size: 0.85rem;
+     }
+
+     .exp-star-marker {
+          width: 16px;
+          height: 16px;
+          min-width: 16px;
+     }
+
+     .exp-star-marker::before {
+          width: 6px;
+          height: 6px;
+     }
+}

@@ -1,0 +1,383 @@
+/*
+ * Space Theme - Planet & Rover Styles
+ * Fixed planet, 8-bit rover with scroll-based positioning
+ */
+
+/* ============================================
+   Planet Container (Fixed Left Edge)
+   ============================================ */
+.planet-container {
+     position: fixed;
+     top: 50%;
+     left: 0;
+     transform: translateY(-50%) translateX(-92%);
+     width: 1200px;
+     height: 1200px;
+     z-index: 50;
+     pointer-events: none;
+     overflow: visible;
+}
+
+/* 8-Bit Pixel Planet */
+.pixel-planet {
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     /* Rotate the entire planet based on scroll */
+     transform: rotate(calc(var(--scroll-progress, 0) * 360deg));
+     transition: transform 0.1s linear;
+}
+
+.planet-svg {
+     width: 100%;
+     height: 100%;
+     image-rendering: pixelated;
+     image-rendering: crisp-edges;
+     filter: drop-shadow(0 0 40px rgba(80, 134, 111, 0.3));
+}
+
+.planet-surface-group {
+     transform: translateX(0);
+}
+
+/* Planet colors */
+.ocean {
+     fill: #1a3a5c;
+}
+
+.land {
+     fill: var(--color-turquoise);
+}
+
+.land-1 {
+     fill: var(--color-orange);
+}
+
+.land-2 {
+     fill: var(--color-gold);
+}
+
+.land-3 {
+     fill: var(--color-turquoise);
+}
+
+.ice {
+     fill: #e8e8f0;
+}
+
+.ice-detail {
+     fill: #d0d0e0;
+}
+
+/* Planet shading - gives 3D effect */
+.planet-shadow {
+     fill: url(#planetShade);
+     fill: transparent;
+     stroke: none;
+}
+
+.planet-shadow {
+     fill: none;
+     stroke: none;
+     background: radial-gradient(circle at 30% 30%, transparent 40%, rgba(0,0,0,0.6) 100%);
+}
+
+/* Add shading via CSS */
+.pixel-planet::after {
+     content: '';
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     border-radius: 50%;
+     background: radial-gradient(circle at 35% 35%,
+          transparent 0%,
+          transparent 30%,
+          rgba(0, 0, 0, 0.2) 50%,
+          rgba(0, 0, 0, 0.5) 70%,
+          rgba(5, 5, 16, 0.8) 90%
+     );
+     pointer-events: none;
+}
+
+/* Atmosphere glow */
+.planet-glow {
+     fill: none;
+     stroke: rgba(80, 134, 111, 0.3);
+     stroke-width: 4;
+}
+
+/* Edge fade to blend with background */
+.pixel-planet::before {
+     content: '';
+     position: absolute;
+     top: -40px;
+     left: -40px;
+     right: -40px;
+     bottom: -40px;
+     border-radius: 50%;
+     background: radial-gradient(circle,
+          transparent 45%,
+          rgba(5, 5, 16, 0.5) 55%,
+          rgba(5, 5, 16, 0.9) 70%,
+          var(--color-darker) 85%
+     );
+     pointer-events: none;
+}
+
+/* ============================================
+   8-Bit Rover
+   ============================================ */
+.rover {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 70px;
+     height: 47px;
+     z-index: 60;
+     pointer-events: none;
+
+     /* Rover climbs UP the arc as you scroll DOWN the page */
+     /* Start at bottom of arc (45deg), end at top (-45deg) */
+     --rover-angle: calc(45deg - (var(--scroll-progress, 0) * 90deg));
+
+     transform:
+          translate(-504px, 50vh)
+          rotate(var(--rover-angle))
+          translateX(605px)
+          translate(-50%, -50%)
+          rotate(-90deg);
+
+     transition: transform 0.1s ease-out;
+}
+
+.rover-svg {
+     width: 100%;
+     height: 100%;
+     filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+     image-rendering: pixelated;
+     image-rendering: crisp-edges;
+}
+
+/* ============================================
+   Rover Colors - 8-bit style
+   ============================================ */
+.antenna-stem {
+     fill: #888888;
+}
+
+.antenna-ball {
+     fill: var(--color-orange);
+     animation: antennaBlink 1.5s step-end infinite;
+}
+
+@keyframes antennaBlink {
+     0%, 50% { fill: var(--color-orange); }
+     51%, 100% { fill: var(--color-gold); }
+}
+
+.mast {
+     fill: #777777;
+}
+
+.camera {
+     fill: #444444;
+}
+
+.camera-lens {
+     fill: var(--color-turquoise);
+     animation: cameraGlow 2s step-end infinite;
+}
+
+@keyframes cameraGlow {
+     0%, 50% { fill: var(--color-turquoise); }
+     51%, 100% { fill: #8ed4b8; }
+}
+
+.body-main {
+     fill: #d4d4d4;
+     stroke: #aaaaaa;
+     stroke-width: 2;
+}
+
+.body-top {
+     fill: #e8e8e8;
+}
+
+.solar-panel {
+     fill: #2a4a6a;
+}
+
+.solar-line {
+     stroke: #1a3a5a;
+     stroke-width: 2;
+}
+
+.panel {
+     fill: #333333;
+}
+
+.light {
+     fill: var(--color-gold);
+     animation: lightBlink 0.8s step-end infinite;
+}
+
+.light-2 {
+     animation-delay: 0.4s;
+}
+
+@keyframes lightBlink {
+     0%, 70% { fill: var(--color-gold); }
+     71%, 100% { fill: #ffe4a0; }
+}
+
+.vent {
+     fill: #555555;
+}
+
+.status-light {
+     fill: #44ff44;
+     animation: statusPulse 1s step-end infinite;
+}
+
+@keyframes statusPulse {
+     0%, 50% { fill: #44ff44; }
+     51%, 100% { fill: #22aa22; }
+}
+
+.wheel-mount {
+     fill: #666666;
+}
+
+.wheel-outer {
+     fill: #333333;
+     stroke: #222222;
+     stroke-width: 2;
+}
+
+.wheel-inner {
+     fill: #444444;
+}
+
+.wheel-spoke {
+     fill: #555555;
+}
+
+/* ============================================
+   Curiosity Rover specific parts
+   ============================================ */
+.rtg {
+     fill: #8b4513;
+}
+
+.rtg-fins {
+     fill: #654321;
+}
+
+.rtg-top {
+     fill: #a0522d;
+}
+
+.hga-mast {
+     fill: #888888;
+}
+
+.hga-dish {
+     fill: #d4d4d4;
+}
+
+.mast-base {
+     fill: #666666;
+}
+
+.mast-stem {
+     fill: #777777;
+}
+
+.mast-head {
+     fill: #888888;
+}
+
+.mastcam {
+     fill: #222222;
+}
+
+.chemcam {
+     fill: var(--color-orange);
+     animation: chemcamPulse 2s step-end infinite;
+}
+
+@keyframes chemcamPulse {
+     0%, 70% { fill: var(--color-orange); }
+     71%, 100% { fill: var(--color-gold); }
+}
+
+.panel-dark {
+     fill: #333333;
+}
+
+.panel-light {
+     fill: #555555;
+}
+
+.hazcam {
+     fill: #222222;
+}
+
+.instrument-light {
+     fill: var(--color-turquoise);
+     animation: instrumentBlink 1.2s step-end infinite;
+}
+
+@keyframes instrumentBlink {
+     0%, 60% { fill: var(--color-turquoise); }
+     61%, 100% { fill: #8ed4b8; }
+}
+
+.arm-segment {
+     fill: #777777;
+}
+
+.arm-turret {
+     fill: #666666;
+}
+
+.suspension {
+     fill: #555555;
+}
+
+.rocker {
+     fill: #666666;
+}
+
+.wheel-tread {
+     fill: #222222;
+}
+
+.wheel-hub {
+     fill: #444444;
+}
+
+/* ============================================
+   Wheel Animation
+   ============================================ */
+.wheel {
+     transform-origin: center;
+}
+
+.wheel-1 { animation: wheelSpin 0.4s linear infinite; }
+.wheel-2 { animation: wheelSpin 0.4s linear infinite 0.05s; }
+.wheel-3 { animation: wheelSpin 0.4s linear infinite 0.1s; }
+.wheel-4 { animation: wheelSpin 0.4s linear infinite 0.15s; }
+.wheel-5 { animation: wheelSpin 0.4s linear infinite 0.2s; }
+
+@keyframes wheelSpin {
+     0% { transform: translateY(0); }
+     25% { transform: translateY(-2px); }
+     50% { transform: translateY(0); }
+     75% { transform: translateY(2px); }
+     100% { transform: translateY(0); }
+}

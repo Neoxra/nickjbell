@@ -1,0 +1,508 @@
+/*
+ * Space Theme - Component Styles
+ * Home, About, Projects, Experience, Contact sections
+ */
+
+/* ============================================
+   Home Section
+   ============================================ */
+.hero-title {
+     font-family: 'Orbitron', sans-serif;
+     font-size: 5rem;
+     font-weight: 700;
+     line-height: 1.1;
+     margin-bottom: 15px;
+}
+
+.hero-title .highlight {
+     color: var(--color-gold);
+     text-shadow: 0 0 40px rgba(227, 174, 87, 0.5);
+}
+
+.hero-subtitle {
+     font-size: 1.8rem;
+     color: var(--color-orange);
+     margin-bottom: 25px;
+     letter-spacing: 2px;
+}
+
+.hero-desc {
+     font-size: 1.3rem;
+     color: rgba(255,255,255,0.8);
+     max-width: 550px;
+     line-height: 1.7;
+     margin-bottom: 35px;
+}
+
+.social-links {
+     display: flex;
+     gap: 15px;
+}
+
+.social-link {
+     width: 50px;
+     height: 50px;
+     border: 2px solid rgba(227, 174, 87, 0.5);
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     color: var(--color-gold);
+     font-size: 1.2rem;
+     text-decoration: none;
+     transition: all 0.3s ease;
+}
+
+.social-link:hover {
+     background: var(--color-gold);
+     color: var(--color-dark);
+     transform: translateY(-5px);
+     box-shadow: 0 10px 30px rgba(227, 174, 87, 0.4);
+}
+
+/* ============================================
+   About Section
+   ============================================ */
+.about-grid {
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     gap: 40px;
+}
+
+.about-text p {
+     font-size: 1.35rem;
+     line-height: 1.8;
+     color: rgba(255,255,255,0.85);
+}
+
+.skills-panel {
+     background: rgba(255,255,255,0.03);
+     border: 1px solid rgba(227, 174, 87, 0.2);
+     border-radius: 15px;
+     padding: 25px;
+     backdrop-filter: blur(10px);
+}
+
+.skills-panel h3 {
+     color: var(--color-gold);
+     margin-bottom: 15px;
+     font-family: 'Orbitron', sans-serif;
+}
+
+.skill-tags {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 10px;
+     margin-bottom: 25px;
+}
+
+.skill-tag {
+     background: rgba(227, 174, 87, 0.1);
+     border: 1px solid rgba(227, 174, 87, 0.3);
+     color: var(--color-gold);
+     padding: 8px 16px;
+     border-radius: 20px;
+     font-size: 1rem;
+     transition: all 0.3s ease;
+}
+
+.skill-tag:hover {
+     background: rgba(227, 174, 87, 0.2);
+     box-shadow: 0 0 15px rgba(227, 174, 87, 0.3);
+}
+
+.skill-bar {
+     margin-bottom: 15px;
+}
+
+.skill-name {
+     font-size: 0.9rem;
+     color: rgba(255,255,255,0.8);
+     margin-bottom: 8px;
+     display: block;
+}
+
+.skill-progress {
+     height: 6px;
+     background: rgba(255,255,255,0.1);
+     border-radius: 3px;
+     overflow: hidden;
+}
+
+.skill-fill {
+     height: 100%;
+     width: var(--fill);
+     background: linear-gradient(90deg, var(--color-orange), var(--color-gold));
+     border-radius: 3px;
+     box-shadow: 0 0 10px var(--color-gold);
+     transform: scaleX(0);
+     transform-origin: left;
+     transition: transform 1s ease;
+}
+
+.constellation.active .skill-fill {
+     transform: scaleX(1);
+}
+
+/* ============================================
+   Projects Section
+   ============================================ */
+.projects-grid {
+     display: grid;
+     grid-template-columns: repeat(2, 1fr);
+     gap: 25px;
+}
+
+.project-card {
+     background: rgba(255,255,255,0.03);
+     border: 1px solid rgba(227, 174, 87, 0.15);
+     border-radius: 15px;
+     padding: 30px;
+     transition: all 0.4s ease;
+     position: relative;
+     overflow: hidden;
+}
+
+.project-card::before {
+     content: '';
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     height: 3px;
+     background: linear-gradient(90deg, var(--color-orange), var(--color-gold), var(--color-turquoise));
+     transform: scaleX(0);
+     transition: transform 0.4s ease;
+}
+
+.project-card:hover {
+     transform: translateY(-10px);
+     border-color: var(--color-gold);
+     box-shadow: 0 20px 50px rgba(0,0,0,0.3), 0 0 30px rgba(227, 174, 87, 0.1);
+}
+
+.project-card:hover::before {
+     transform: scaleX(1);
+}
+
+.project-icon {
+     width: 60px;
+     height: 60px;
+     background: linear-gradient(135deg, var(--color-orange), var(--color-gold));
+     border-radius: 12px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-bottom: 20px;
+     font-size: 1.5rem;
+     color: white;
+}
+
+.project-card h3 {
+     color: white;
+     font-size: 1.5rem;
+     margin-bottom: 12px;
+}
+
+.project-card p {
+     color: rgba(255,255,255,0.7);
+     font-size: 1.15rem;
+     line-height: 1.6;
+     margin-bottom: 15px;
+}
+
+.project-link {
+     color: var(--color-gold);
+     text-decoration: none;
+     font-size: 0.9rem;
+     display: inline-flex;
+     align-items: center;
+     gap: 8px;
+     transition: all 0.3s ease;
+}
+
+.project-link:hover {
+     color: var(--color-orange);
+     gap: 12px;
+}
+
+/* ============================================
+   Experience Section - Constellation Layout
+   ============================================ */
+.constellation-experience {
+     padding: 80px 60px 80px 180px;
+}
+
+.experience-constellation-layout {
+     max-width: 100%;
+     width: 100%;
+}
+
+.experience-title {
+     text-align: center;
+     margin-bottom: 40px;
+}
+
+.experience-starmap {
+     position: relative;
+     width: 100%;
+     min-height: 800px;
+     display: flex;
+     flex-direction: column;
+     gap: 0;
+}
+
+/* Vertical constellation line */
+.experience-starmap::before {
+     content: '';
+     position: absolute;
+     left: 11px;
+     top: 5%;
+     bottom: 12%;
+     width: 2px;
+     background: linear-gradient(180deg,
+          var(--color-gold) 0%,
+          var(--color-orange) 50%,
+          var(--color-turquoise) 100%
+     );
+     opacity: 0.6;
+     filter: drop-shadow(0 0 6px var(--color-gold));
+     z-index: 1;
+}
+
+/* Experience star items */
+.exp-star-item {
+     position: relative;
+     display: flex;
+     align-items: flex-start;
+     gap: 25px;
+     z-index: 5;
+     opacity: 0;
+     transform: translateX(-30px);
+     transition: opacity 0.5s ease, transform 0.5s ease;
+     margin-bottom: 35px;
+}
+
+.exp-star-item:last-child {
+     margin-bottom: 0;
+}
+
+.constellation.active .exp-star-item {
+     opacity: 1;
+     transform: translateX(0);
+}
+
+.constellation.active .exp-star-1 { transition-delay: 0.1s; }
+.constellation.active .exp-star-2 { transition-delay: 0.2s; }
+.constellation.active .exp-star-3 { transition-delay: 0.3s; }
+.constellation.active .exp-star-4 { transition-delay: 0.4s; }
+.constellation.active .exp-star-5 { transition-delay: 0.5s; }
+
+/* Star markers */
+.exp-star-marker {
+     width: 24px;
+     height: 24px;
+     min-width: 24px;
+     background: var(--color-gold);
+     border-radius: 50%;
+     box-shadow:
+          0 0 20px var(--color-gold),
+          0 0 40px rgba(227, 174, 87, 0.5),
+          0 0 60px rgba(227, 174, 87, 0.3);
+     position: relative;
+     margin-top: 5px;
+}
+
+.exp-star-marker::before {
+     content: '';
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     width: 10px;
+     height: 10px;
+     background: white;
+     border-radius: 50%;
+}
+
+.exp-star-marker.pulse {
+     animation: starMarkerPulse 2s ease-in-out infinite;
+}
+
+@keyframes starMarkerPulse {
+     0%, 100% {
+          box-shadow:
+               0 0 20px var(--color-gold),
+               0 0 40px rgba(227, 174, 87, 0.5);
+          transform: scale(1);
+     }
+     50% {
+          box-shadow:
+               0 0 30px var(--color-gold),
+               0 0 60px rgba(227, 174, 87, 0.7),
+               0 0 80px rgba(233, 114, 76, 0.4);
+          transform: scale(1.15);
+     }
+}
+
+.exp-star-marker.edu-marker {
+     background: var(--color-turquoise);
+     box-shadow:
+          0 0 20px var(--color-turquoise),
+          0 0 40px rgba(80, 134, 111, 0.5);
+}
+
+/* Experience content */
+.exp-star-content {
+     max-width: 500px;
+     background: rgba(5, 5, 16, 0.7);
+     padding: 22px 28px;
+     border-radius: 12px;
+     border: 1px solid rgba(227, 174, 87, 0.2);
+     backdrop-filter: blur(10px);
+}
+
+.exp-star-item.current .exp-star-content {
+     border-color: var(--color-gold);
+     box-shadow: 0 0 30px rgba(227, 174, 87, 0.15);
+}
+
+.exp-star-item.education .exp-star-content {
+     border-color: rgba(80, 134, 111, 0.4);
+}
+
+.exp-date {
+     font-size: 1.05rem;
+     color: var(--color-turquoise);
+     letter-spacing: 1px;
+     font-weight: 600;
+}
+
+.exp-star-content h3 {
+     color: white;
+     font-size: 1.6rem;
+     margin: 10px 0;
+     font-weight: 600;
+}
+
+.exp-star-content h3 i {
+     margin-right: 10px;
+     color: var(--color-turquoise);
+}
+
+.exp-star-content h4 {
+     color: var(--color-gold);
+     font-size: 1.25rem;
+     font-weight: 500;
+     margin-bottom: 12px;
+}
+
+.exp-star-content p {
+     color: rgba(255,255,255,0.85);
+     font-size: 1.15rem;
+     line-height: 1.6;
+     margin: 0;
+}
+
+/* ============================================
+   Contact Section
+   ============================================ */
+.contact-intro {
+     color: rgba(255,255,255,0.8);
+     margin-bottom: 30px;
+     font-size: 1.1rem;
+}
+
+.contact-grid {
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     gap: 40px;
+}
+
+.contact-form {
+     display: flex;
+     flex-direction: column;
+     gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+     background: rgba(255,255,255,0.05);
+     border: 1px solid rgba(227, 174, 87, 0.2);
+     border-radius: 10px;
+     padding: 15px 20px;
+     color: white;
+     font-family: inherit;
+     font-size: 1rem;
+     transition: all 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+     outline: none;
+     border-color: var(--color-gold);
+     box-shadow: 0 0 20px rgba(227, 174, 87, 0.2);
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+     color: rgba(255,255,255,0.4);
+}
+
+.submit-btn {
+     background: linear-gradient(90deg, var(--color-orange), var(--color-gold));
+     border: none;
+     border-radius: 10px;
+     padding: 15px 30px;
+     color: white;
+     font-size: 1rem;
+     font-weight: 600;
+     cursor: pointer;
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     gap: 10px;
+     transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+     transform: translateY(-3px);
+     box-shadow: 0 10px 30px rgba(227, 174, 87, 0.4);
+}
+
+.contact-info {
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+     padding-top: 20px;
+}
+
+.contact-item {
+     display: flex;
+     align-items: center;
+     gap: 15px;
+     color: rgba(255,255,255,0.8);
+}
+
+.contact-item i {
+     width: 45px;
+     height: 45px;
+     background: rgba(227, 174, 87, 0.1);
+     border: 1px solid rgba(227, 174, 87, 0.3);
+     border-radius: 10px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     color: var(--color-gold);
+     font-size: 1.1rem;
+}
+
+.contact-item a {
+     color: var(--color-gold);
+     text-decoration: none;
+     transition: color 0.3s ease;
+}
+
+.contact-item a:hover {
+     color: var(--color-orange);
+}
