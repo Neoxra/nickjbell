@@ -4,10 +4,12 @@
      yellow #E3AE57 · orange #ea833a / #E9724C · turquoise #50866f · dark #161616
    ============================================================================ */
 
+html { background: #f4f4f4; }
 .movies-page {
   font-family: "Source Sans Pro", sans-serif;
   background: #f4f4f4;
   color: #161616;
+  overflow-x: hidden;
 }
 
 .hidden { display: none !important; }
@@ -224,7 +226,7 @@ a.movie-card:focus { text-decoration: none; cursor: pointer; }
   font-size: 15px;
   background: #fff;
 }
-.controls-right { display: flex; align-items: center; gap: 8px; }
+.controls-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .controls-right label { margin: 0; font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
 #wall-sort,
 #person-filter {
@@ -389,4 +391,9 @@ body.modal-open-movies { overflow: hidden; }
   .movie-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 14px; }
   #movie-author { flex: 1 1 100%; }
   .mm-backdrop { height: 170px; }
+  /* let the filter/sort controls wrap instead of overflowing the screen */
+  .controls-right { width: 100%; }
+  #person-filter, #wall-sort { flex: 1 1 auto; max-width: none; }
+  .media-toggle { flex: 1 1 100%; }
+  .media-btn { flex: 1 1 0; }
 }
