@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="css/animate.css">
 <link rel="stylesheet" href="css/font-awesome.min.css">
 <link rel="stylesheet" href="css/templatemo-style.css">
-<link rel="stylesheet" href="css/movies.css?v=4">
+<link rel="stylesheet" href="css/movies.css?v=5">
 
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" rel="stylesheet">
 
@@ -61,15 +61,15 @@
      <div class="container">
           <h1 class="wow fadeInUp"><i class="fa fa-film"></i>The Movie Wall</h1>
           <p class="wow fadeInUp" data-wow-delay="0.3s">
-               A shared, ever-growing list of films worth watching. Search for any movie,
-               pick it, and add it to the wall — it shows up instantly for everyone.
+               A shared, ever-growing list of films and TV series worth watching. Search for
+               any movie or show, pick it, and add it to the wall — it shows up instantly for everyone.
           </p>
 
           <div class="movie-add-box wow fadeInUp" data-wow-delay="0.5s">
                <div class="movie-add-row">
                     <div class="field-grow">
                          <input type="text" id="movie-search" autocomplete="off"
-                                placeholder="Search a movie to add…">
+                                placeholder="Search a movie or TV show to add…">
                          <ul id="movie-suggestions" class="hidden"></ul>
                     </div>
                     <input type="text" id="movie-author" autocomplete="off"
@@ -90,6 +90,11 @@
           <div class="movies-controls">
                <input type="text" id="wall-filter" autocomplete="off" placeholder="Filter the wall…">
                <div class="controls-right">
+                    <div id="media-toggle" class="media-toggle">
+                         <button class="media-btn active" data-media-filter="all">All</button>
+                         <button class="media-btn" data-media-filter="movie">Movies</button>
+                         <button class="media-btn" data-media-filter="tv">TV</button>
+                    </div>
                     <label for="wall-sort">Sort</label>
                     <select id="wall-sort">
                          <option value="recent">Recently added</option>
@@ -142,8 +147,8 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-check-compat.js"></script>
 
 <!-- Movies -->
-<script src="js/movies-config.js?v=4"></script>
-<script src="js/movies.js?v=4"></script>
+<script src="js/movies-config.js?v=5"></script>
+<script src="js/movies.js?v=5"></script>
 
 </body>
 </html>

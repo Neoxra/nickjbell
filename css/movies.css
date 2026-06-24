@@ -118,6 +118,16 @@
   border-radius: 20px;
 }
 .ms-empty { padding: 12px; color: #888; }
+.ms-type {
+  flex: 0 0 auto;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #50866f;
+  background: #e7f0eb;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
 
 /* ---- Status banner -------------------------------------------------------- */
 
@@ -244,6 +254,22 @@ a.movie-card:focus { text-decoration: none; cursor: pointer; }
 .genre-chip:hover { background: #fff3e6; }
 .genre-chip.active { background: #E3AE57; border-color: #E3AE57; color: #161616; font-weight: 700; }
 
+/* media type segmented toggle */
+.media-toggle { display: inline-flex; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; }
+.media-btn {
+  border: none;
+  background: #fff;
+  color: #888;
+  padding: 0 14px;
+  height: 44px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.media-btn + .media-btn { border-left: 1px solid #eee; }
+.media-btn:hover { background: #faf3e6; }
+.media-btn.active { background: #50866f; color: #fff; font-weight: 700; }
+
 /* ---- Card extras (rating badge, vote button) ----------------------------- */
 
 .movie-card { cursor: pointer; }
@@ -259,6 +285,17 @@ a.movie-card:focus { text-decoration: none; cursor: pointer; }
   border-radius: 14px;
 }
 .mc-rating .fa { font-size: 11px; }
+.mc-type {
+  position: absolute;
+  top: 8px; right: 8px;
+  background: #50866f;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
 
 .mc-info { display: flex; flex-direction: column; }
 .mc-vote {

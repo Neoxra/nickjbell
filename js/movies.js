@@ -11,13 +11,19 @@
 
   var cfg = window.MOVIES_CONFIG || {};
 
-  // TMDB movie genre id -> name. Used to bucket the wall into categories.
+  // TMDB genre id -> name. Used to bucket the wall into categories.
+  // Includes both movie and TV genre ids; TV-only ids are merged into the
+  // nearest movie bucket where sensible so films & shows share categories.
   var GENRES = {
+    // movie + shared
     28: "Action", 12: "Adventure", 16: "Animation", 35: "Comedy",
     80: "Crime", 99: "Documentary", 18: "Drama", 10751: "Family",
     14: "Fantasy", 36: "History", 27: "Horror", 10402: "Music",
     9648: "Mystery", 10749: "Romance", 878: "Sci-Fi", 10770: "TV Movie",
-    53: "Thriller", 10752: "War", 37: "Western"
+    53: "Thriller", 10752: "War", 37: "Western",
+    // TV-only
+    10759: "Action", 10762: "Family", 10763: "News", 10764: "Reality",
+    10765: "Sci-Fi", 10766: "Soap", 10767: "Talk", 10768: "War"
   };
 
   var TMDB_IMG = "https://image.tmdb.org/t/p/w342";
@@ -48,6 +54,22 @@
 
   function genreName(id) { return GENRES[id] || "Other"; }
   function primaryGenre(ids) { return (ids && ids.length) ? genreName(ids[0]) : "Other"; }
+
+  // Normalize a TMDB search result (movie OR tv) into one shape.
+  function norm(m) {
+    var mt = m.media_type || (m.title ? "movie" : "tv");
+    return {
+      tmdbId:      m.id,
+      mediaType:   mt,
+      title:       m.title || m.name || "",
+      date:        m.release_date || m.first_air_date || "",
+      posterPath:  m.poster_path || null,
+      genreIds:    m.genre_ids || [],
+      voteAverage: (typeof m.vote_average === "number") ? m.vote_average : null,
+      overview:    m.overview || ""
+    };
+  }
+  function mediaLabel(t) { return t === "tv" ? "TV" : "Film"; }
 
   // unified TMDB GET — accepts a v4 bearer token (JWT) or a v3 api_key
   function tmdbGet(path, query) {
@@ -100,7 +122,7 @@
   // ---- state ----------------------------------------------------------------
 
   var allDocs = [];
-  var view = { filter: "", genre: "All", sort: "recent" };
+  var view = { filter: "", genre: "All", sort: "recent", media: "all" };
   var selected = null; // TMDB result the user picked to add
 
   // ---- TMDB search (add box) ------------------------------------------------
@@ -108,8 +130,14 @@
   var searchTimer = null;
 
   function tmdbSearch(query) {
-    tmdbGet("/search/movie", "include_adult=false&query=" + encodeURIComponent(query))
-      .done(function (data) { renderSuggestions((data && data.results) || []); })
+    // /search/multi returns movies, TV shows and people — keep movies + TV.
+    tmdbGet("/search/multi", "include_adult=false&query=" + encodeURIComponent(query))
+      .done(function (data) {
+        var results = ((data && data.results) || [])
+          .filter(function (m) { return m.media_type === "movie" || m.media_type === "tv"; })
+          .map(norm);
+        renderSuggestions(results);
+      })
       .fail(function () {
         $("#movie-suggestions")
           .html('<li class="ms-empty">TMDB lookup failed — check your API key.</li>')
@@ -124,23 +152,24 @@
       $box.html('<li class="ms-empty">No matches.</li>').removeClass("hidden");
       return;
     }
-    var html = results.map(function (m) {
-      var year = (m.release_date || "").slice(0, 4);
-      var thumb = m.poster_path ? TMDB_IMG + m.poster_path : POSTER_PLACEHOLDER;
-      return '<li class="ms-item" data-id="' + m.id + '">' +
+    var html = results.map(function (m, i) {
+      var year = (m.date || "").slice(0, 4);
+      var thumb = m.posterPath ? TMDB_IMG + m.posterPath : POSTER_PLACEHOLDER;
+      return '<li class="ms-item" data-i="' + i + '">' +
         '<img src="' + esc(thumb) + '" alt="">' +
         '<span class="ms-title">' + esc(m.title) +
         (year ? ' <em>(' + esc(year) + ')</em>' : '') + '</span>' +
-        '<span class="ms-genre">' + esc(primaryGenre(m.genre_ids)) + '</span>' +
+        '<span class="ms-type">' + esc(mediaLabel(m.mediaType)) + '</span>' +
+        '<span class="ms-genre">' + esc(primaryGenre(m.genreIds)) + '</span>' +
         '</li>';
     }).join("");
     $box.data("results", results).html(html).removeClass("hidden");
   }
 
-  function pick(movie) {
-    selected = movie;
-    var year = (movie.release_date || "").slice(0, 4);
-    $("#movie-search").val(movie.title + (year ? " (" + year + ")" : ""));
+  function pick(item) {
+    selected = item; // already normalized
+    var year = (item.date || "").slice(0, 4);
+    $("#movie-search").val(item.title + (year ? " (" + year + ")" : ""));
     $("#movie-suggestions").addClass("hidden").empty();
     $("#add-movie-btn").prop("disabled", false);
   }
@@ -150,20 +179,23 @@
   function addMovie() {
     if (!selected) return;
 
-    if (allDocs.some(function (d) { return d.tmdbId === selected.id; })) {
+    if (allDocs.some(function (d) {
+      return d.tmdbId === selected.tmdbId && (d.mediaType || "movie") === selected.mediaType;
+    })) {
       flash("That one's already on the wall 👍");
       resetForm();
       return;
     }
 
     var doc = {
-      tmdbId:      selected.id,
+      tmdbId:      selected.tmdbId,
+      mediaType:   selected.mediaType,
       title:       selected.title,
-      year:        parseInt((selected.release_date || "").slice(0, 4), 10) || null,
-      posterPath:  selected.poster_path || null,
-      genre:       primaryGenre(selected.genre_ids),
-      genreIds:    selected.genre_ids || [],
-      voteAverage: (typeof selected.vote_average === "number") ? selected.vote_average : null,
+      year:        parseInt((selected.date || "").slice(0, 4), 10) || null,
+      posterPath:  selected.posterPath || null,
+      genre:       primaryGenre(selected.genreIds),
+      genreIds:    selected.genreIds || [],
+      voteAverage: (typeof selected.voteAverage === "number") ? selected.voteAverage : null,
       overview:    (selected.overview || "").slice(0, 1000) || null,
       votes:       0,
       addedBy:     ($("#movie-author").val() || "anon").slice(0, 40),
@@ -213,17 +245,18 @@
 
   // ---- detail modal ---------------------------------------------------------
 
-  function openModal(tmdbId) {
+  function openModal(tmdbId, mediaType) {
+    mediaType = (mediaType === "tv") ? "tv" : "movie";
     var $m = $("#movie-modal");
     $("#mm-body").html('<p class="mm-loading"><i class="fa fa-circle-o-notch fa-spin"></i> Loading…</p>');
     $m.removeClass("hidden");
     $("body").addClass("modal-open-movies");
 
-    tmdbGet("/movie/" + encodeURIComponent(tmdbId), "append_to_response=videos")
-      .done(function (m) { $("#mm-body").html(modalHtml(m)); })
+    tmdbGet("/" + mediaType + "/" + encodeURIComponent(tmdbId), "append_to_response=videos")
+      .done(function (m) { $("#mm-body").html(modalHtml(m, mediaType)); })
       .fail(function () {
         $("#mm-body").html('<p class="mm-loading">Couldn\'t load details. ' +
-          '<a target="_blank" rel="noopener" href="https://www.themoviedb.org/movie/' +
+          '<a target="_blank" rel="noopener" href="https://www.themoviedb.org/' + mediaType + '/' +
           encodeURIComponent(tmdbId) + '">View on TMDB</a></p>');
       });
   }
@@ -233,10 +266,18 @@
     $("body").removeClass("modal-open-movies");
   }
 
-  function modalHtml(m) {
-    var year = (m.release_date || "").slice(0, 4);
+  function modalHtml(m, mediaType) {
+    var isTv = mediaType === "tv";
+    var title = m.title || m.name || "";
+    var year = ((isTv ? m.first_air_date : m.release_date) || "").slice(0, 4);
     var rating = m.vote_average ? m.vote_average.toFixed(1) : null;
-    var runtime = m.runtime ? m.runtime + " min" : null;
+    var runtime;
+    if (isTv) {
+      runtime = m.number_of_seasons
+        ? m.number_of_seasons + (m.number_of_seasons === 1 ? " season" : " seasons") : null;
+    } else {
+      runtime = m.runtime ? m.runtime + " min" : null;
+    }
     var genres = (m.genres || []).map(function (g) { return g.name; }).join(" · ");
     var backdrop = m.backdrop_path ? TMDB_BACKDROP + m.backdrop_path
                  : (m.poster_path ? TMDB_IMG + m.poster_path : "");
@@ -250,13 +291,13 @@
       }
     }
 
-    var meta = [year, runtime, genres].filter(Boolean).join("  ·  ");
-    var tmdbUrl = "https://www.themoviedb.org/movie/" + encodeURIComponent(m.id);
+    var meta = [(isTv ? "TV series" : "Film"), year, runtime, genres].filter(Boolean).join("  ·  ");
+    var tmdbUrl = "https://www.themoviedb.org/" + (isTv ? "tv" : "movie") + "/" + encodeURIComponent(m.id);
 
     return (backdrop ? '<div class="mm-backdrop" style="background-image:url(\'' +
               esc(backdrop) + '\')"></div>' : '') +
       '<div class="mm-content">' +
-        '<h3>' + esc(m.title) + '</h3>' +
+        '<h3>' + esc(title) + '</h3>' +
         (rating ? '<span class="mm-rating"><i class="fa fa-star"></i> ' + esc(rating) + '</span>' : '') +
         '<p class="mm-meta">' + esc(meta) + '</p>' +
         '<p class="mm-overview">' + esc(m.overview || "No description available.") + '</p>' +
@@ -300,6 +341,9 @@
     var voted = getVoted();
     var docs = allDocs.slice();
 
+    if (view.media !== "all") {
+      docs = docs.filter(function (d) { return (d.mediaType || "movie") === view.media; });
+    }
     if (view.genre !== "All") {
       docs = docs.filter(function (d) { return (d.genre || "Other") === view.genre; });
     }
@@ -331,12 +375,15 @@
       var cards = buckets[cat].map(function (m) {
         var poster = m.posterPath ? TMDB_IMG + m.posterPath : POSTER_PLACEHOLDER;
         var hasVoted = voted.indexOf(m._id) !== -1;
+        var mt = m.mediaType || "movie";
         var badge = (typeof m.voteAverage === "number" && m.voteAverage > 0)
           ? '<span class="mc-rating"><i class="fa fa-star"></i> ' + m.voteAverage.toFixed(1) + '</span>' : '';
-        return '<div class="movie-card" data-tmdb="' + esc(m.tmdbId) + '" tabindex="0">' +
+        var typeTag = (mt === "tv") ? '<span class="mc-type">TV</span>' : '';
+        return '<div class="movie-card" data-tmdb="' + esc(m.tmdbId) +
+          '" data-media="' + esc(mt) + '" tabindex="0">' +
           '<div class="mc-poster">' +
             '<img loading="lazy" src="' + esc(poster) + '" alt="' + esc(m.title) + ' poster">' +
-            badge +
+            badge + typeTag +
           '</div>' +
           '<div class="mc-info">' +
             '<h4>' + esc(m.title) + '</h4>' +
@@ -373,8 +420,7 @@
 
     $("#movie-suggestions").on("click", ".ms-item", function () {
       var results = $("#movie-suggestions").data("results") || [];
-      var id = parseInt($(this).attr("data-id"), 10);
-      var m = results.filter(function (r) { return r.id === id; })[0];
+      var m = results[parseInt($(this).attr("data-i"), 10)];
       if (m) pick(m);
     });
 
@@ -386,6 +432,12 @@
     $("#genre-chips").on("click", ".genre-chip", function () {
       view.genre = $(this).attr("data-genre"); render();
     });
+    $("#media-toggle").on("click", ".media-btn", function () {
+      view.media = $(this).attr("data-media-filter");
+      $("#media-toggle .media-btn").removeClass("active");
+      $(this).addClass("active");
+      render();
+    });
 
     // wall interactions (delegated)
     $("#movies-wall")
@@ -394,10 +446,13 @@
         vote($(this).attr("data-id"));
       })
       .on("click", ".movie-card", function () {
-        openModal($(this).attr("data-tmdb"));
+        openModal($(this).attr("data-tmdb"), $(this).attr("data-media"));
       })
       .on("keydown", ".movie-card", function (e) {
-        if (e.which === 13 || e.which === 32) { e.preventDefault(); openModal($(this).attr("data-tmdb")); }
+        if (e.which === 13 || e.which === 32) {
+          e.preventDefault();
+          openModal($(this).attr("data-tmdb"), $(this).attr("data-media"));
+        }
       });
 
     // modal close
