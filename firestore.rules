@@ -17,7 +17,7 @@ service cloud.firestore {
     match /movies/{movieId} {
       allow read: if true;
       allow create: if isValidMovie();
-      allow update: if isVoteIncrement();
+      allow update: if isVoteChange();
       allow delete: if false;
     }
 
@@ -40,14 +40,15 @@ service cloud.firestore {
         && d.createdAt == request.time;
     }
 
-    // Only allow changing "votes", and only an increment of exactly 1.
-    function isVoteIncrement() {
+    // Only allow changing "votes", and only by ±1 (like / unlike). Never < 0.
+    function isVoteChange() {
       let before = resource.data;
       let after = request.resource.data;
       let prev = before.keys().hasAll(['votes']) ? before.votes : 0;
       return after.diff(before).affectedKeys().hasOnly(['votes'])
         && after.votes is int
-        && after.votes == prev + 1;
+        && after.votes >= 0
+        && (after.votes == prev + 1 || after.votes == prev - 1);
     }
   }
 }

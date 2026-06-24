@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="css/animate.css">
 <link rel="stylesheet" href="css/font-awesome.min.css">
 <link rel="stylesheet" href="css/templatemo-style.css">
-<link rel="stylesheet" href="css/movies.css?v=5">
+<link rel="stylesheet" href="css/movies.css?v=6">
 
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" rel="stylesheet">
 
@@ -72,8 +72,9 @@
                                 placeholder="Search a movie or TV show to add…">
                          <ul id="movie-suggestions" class="hidden"></ul>
                     </div>
-                    <input type="text" id="movie-author" autocomplete="off"
+                    <input type="text" id="movie-author" autocomplete="off" list="people-list"
                            placeholder="Your name (optional)" maxlength="40">
+                    <datalist id="people-list"></datalist>
                     <button id="add-movie-btn" disabled>Add to wall</button>
                </div>
                <div id="add-feedback"></div>
@@ -95,6 +96,10 @@
                          <button class="media-btn" data-media-filter="movie">Movies</button>
                          <button class="media-btn" data-media-filter="tv">TV</button>
                     </div>
+                    <label for="person-filter">By</label>
+                    <select id="person-filter">
+                         <option value="all">All people</option>
+                    </select>
                     <label for="wall-sort">Sort</label>
                     <select id="wall-sort">
                          <option value="recent">Recently added</option>
@@ -147,8 +152,8 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-check-compat.js"></script>
 
 <!-- Movies -->
-<script src="js/movies-config.js?v=5"></script>
-<script src="js/movies.js?v=5"></script>
+<script src="js/movies-config.js?v=6"></script>
+<script src="js/movies.js?v=6"></script>
 
 </body>
 </html>

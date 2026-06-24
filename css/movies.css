@@ -226,7 +226,8 @@ a.movie-card:focus { text-decoration: none; cursor: pointer; }
 }
 .controls-right { display: flex; align-items: center; gap: 8px; }
 .controls-right label { margin: 0; font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
-#wall-sort {
+#wall-sort,
+#person-filter {
   height: 44px;
   padding: 0 12px;
   border: 1px solid #ddd;
@@ -234,6 +235,7 @@ a.movie-card:focus { text-decoration: none; cursor: pointer; }
   background: #fff;
   font-size: 15px;
   cursor: pointer;
+  max-width: 180px;
 }
 .genre-chips {
   flex: 1 1 100%;
@@ -312,7 +314,7 @@ a.movie-card:focus { text-decoration: none; cursor: pointer; }
   transition: 0.2s;
 }
 .mc-vote:hover { border-color: #E9724C; color: #E9724C; }
-.mc-vote.voted { background: #E9724C; border-color: #E9724C; color: #fff; cursor: default; }
+.mc-vote.voted { background: #E9724C; border-color: #E9724C; color: #fff; }
 .mc-vote .fa { margin-right: 3px; }
 
 /* ---- Detail modal --------------------------------------------------------- */

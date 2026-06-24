@@ -71,6 +71,36 @@
   }
   function mediaLabel(t) { return t === "tv" ? "TV" : "Film"; }
 
+  // Case/whitespace-insensitive key for a submitter name; "" and "anon" -> anon.
+  function nameKey(s) {
+    var t = (s == null ? "" : String(s)).trim().toLowerCase();
+    return (t === "" || t === "anon") ? "anon" : t;
+  }
+  // Distinct submitters across the wall: [{key, display, count}], sorted.
+  function peopleList() {
+    var map = {};
+    allDocs.forEach(function (d) {
+      var k = nameKey(d.addedBy);
+      if (!map[k]) {
+        map[k] = { key: k, display: (k === "anon" ? "Anonymous" : String(d.addedBy).trim()), count: 0 };
+      }
+      map[k].count++;
+    });
+    return Object.keys(map).map(function (k) { return map[k]; })
+      .sort(function (a, b) {
+        if (a.key === "anon") return 1;          // keep Anonymous last
+        if (b.key === "anon") return -1;
+        return a.display.localeCompare(b.display);
+      });
+  }
+  // Map a freshly typed name to an existing canonical display (so "nick" reuses "Nick").
+  function canonicalName(input) {
+    var k = nameKey(input);
+    if (k === "anon") return "anon";
+    var found = peopleList().filter(function (p) { return p.key === k; })[0];
+    return found ? found.display : String(input).trim();
+  }
+
   // unified TMDB GET — accepts a v4 bearer token (JWT) or a v3 api_key
   function tmdbGet(path, query) {
     var token = cfg.tmdbApiKey || "";
@@ -89,6 +119,11 @@
   }
   function saveVoted(arr) {
     try { localStorage.setItem("movieVotes", JSON.stringify(arr)); } catch (e) {}
+  }
+  function setVoted(id, on) {
+    var v = getVoted().filter(function (x) { return x !== id; });
+    if (on) v.push(id);
+    saveVoted(v);
   }
 
   // ---- not-yet-configured notice -------------------------------------------
@@ -122,7 +157,7 @@
   // ---- state ----------------------------------------------------------------
 
   var allDocs = [];
-  var view = { filter: "", genre: "All", sort: "recent", media: "all" };
+  var view = { filter: "", genre: "All", sort: "recent", media: "all", person: "all" };
   var selected = null; // TMDB result the user picked to add
 
   // ---- TMDB search (add box) ------------------------------------------------
@@ -198,7 +233,7 @@
       voteAverage: (typeof selected.voteAverage === "number") ? selected.voteAverage : null,
       overview:    (selected.overview || "").slice(0, 1000) || null,
       votes:       0,
-      addedBy:     ($("#movie-author").val() || "anon").slice(0, 40),
+      addedBy:     canonicalName($("#movie-author").val()).slice(0, 40),
       createdAt:   firebase.firestore.FieldValue.serverTimestamp()
     };
 
@@ -226,20 +261,21 @@
 
   // ---- upvotes --------------------------------------------------------------
 
+  // Toggle a like: clicking again removes it (decrement).
   function vote(id) {
-    var voted = getVoted();
-    if (voted.indexOf(id) !== -1) { flash("You've already loved this one ❤"); return; }
+    var has = getVoted().indexOf(id) !== -1;
+    var delta = has ? -1 : 1;
 
-    // Optimistic: record + re-render now so the button locks before the live
-    // snapshot fires (Firestore's local write triggers onSnapshot immediately).
-    voted.push(id); saveVoted(voted); render();
+    // Optimistic: update local state + re-render now (Firestore's local write
+    // triggers onSnapshot immediately, before the server round-trip resolves).
+    setVoted(id, !has); render();
 
-    moviesRef.doc(id).update({ votes: firebase.firestore.FieldValue.increment(1) })
+    moviesRef.doc(id).update({ votes: firebase.firestore.FieldValue.increment(delta) })
       .catch(function (e) {
         console.error(e);
-        saveVoted(getVoted().filter(function (x) { return x !== id; }));
+        setVoted(id, has); // roll back
         render();
-        flash("Couldn't register your vote.");
+        flash("Couldn't update your like.");
       });
   }
 
@@ -335,14 +371,41 @@
     $("#genre-chips").html(html);
   }
 
+  function renderPeople() {
+    var people = peopleList();
+
+    // submitter filter dropdown (preserve current selection if still present)
+    if (view.person !== "all" && !people.some(function (p) { return p.key === view.person; })) {
+      view.person = "all";
+    }
+    var opts = '<option value="all">All people</option>' +
+      people.map(function (p) {
+        return '<option value="' + esc(p.key) + '"' +
+          (view.person === p.key ? ' selected' : '') + '>' +
+          esc(p.display) + ' (' + p.count + ')</option>';
+      }).join("");
+    $("#person-filter").html(opts);
+
+    // autocomplete list for the "your name" submit field (skip Anonymous)
+    var datalist = people
+      .filter(function (p) { return p.key !== "anon"; })
+      .map(function (p) { return '<option value="' + esc(p.display) + '"></option>'; })
+      .join("");
+    $("#people-list").html(datalist);
+  }
+
   function render() {
     renderChips();
+    renderPeople();
 
     var voted = getVoted();
     var docs = allDocs.slice();
 
     if (view.media !== "all") {
       docs = docs.filter(function (d) { return (d.mediaType || "movie") === view.media; });
+    }
+    if (view.person !== "all") {
+      docs = docs.filter(function (d) { return nameKey(d.addedBy) === view.person; });
     }
     if (view.genre !== "All") {
       docs = docs.filter(function (d) { return (d.genre || "Other") === view.genre; });
@@ -390,7 +453,7 @@
             '<span class="mc-meta">' + (m.year ? esc(m.year) : '') +
               (m.addedBy && m.addedBy !== "anon" ? ' · ' + esc(m.addedBy) : '') + '</span>' +
             '<button class="mc-vote' + (hasVoted ? ' voted' : '') + '" data-id="' + esc(m._id) +
-              '" title="Love this">' +
+              '" title="' + (hasVoted ? 'Remove your like' : 'Love this') + '">' +
               '<i class="fa fa-heart"></i> <span>' + (m.votes || 0) + '</span></button>' +
           '</div>' +
         '</div>';
@@ -429,6 +492,7 @@
     // filter / sort controls
     $("#wall-filter").on("input", function () { view.filter = $.trim($(this).val()); render(); });
     $("#wall-sort").on("change", function () { view.sort = $(this).val(); render(); });
+    $("#person-filter").on("change", function () { view.person = $(this).val(); render(); });
     $("#genre-chips").on("click", ".genre-chip", function () {
       view.genre = $(this).attr("data-genre"); render();
     });
